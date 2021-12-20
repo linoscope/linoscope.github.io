@@ -14,8 +14,8 @@ categories: []
 hiddenFromHomePage: false
 hiddenFromSearch: false
 
-featuredImage: ""
-featuredImagePreview: ""
+featuredImage: "/images/camlboy-card.jpg"
+featuredImagePreview: "/images/camlboy-card.jpg"
 
 toc:
   enable: true
