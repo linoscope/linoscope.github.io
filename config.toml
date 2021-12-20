@@ -19,7 +19,7 @@ enableEmoji = true
     # default amount of posts in each pages
     paginate = 12
     # [UA-XXXXXXXX-X] google analytics code
-    googleAnalytics = ""
+    googleAnalytics = "UA-215393498-2"
     # copyright description used only for seo schema
     copyright = "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License."
     # Menu config
@@ -75,6 +75,22 @@ enableEmoji = true
         url = "https://github.com/linoscope"
         title = "GitHub"
         weight = 6
+      [[languages.en.menu.main]]
+        identifier = "twitter"
+        pre = "<i class='fab fa-twitter fa-fw'></i>"
+        post = ""
+        name = ""
+        url = "https://twitter.com/linoscope"
+        title = "Twitter"
+        weight = 7
+      [[languages.en.menu.main]]
+        identifier = "rss"
+        pre = "<i class='fas fa-rss fa-fw'></i>"
+        post = ""
+        name = ""
+        url = "/index.xml"
+        title = "RSS"
+        weight = 8
     [languages.en.params]
       # site description
       description = "The Linoscope Machine"
@@ -96,7 +112,7 @@ enableEmoji = true
         tileColor = "#da532c"
       # Search config
       [languages.en.params.search]
-        enable = true
+        enable = false
         # type of search engine ("lunr", "algolia")
         type = "algolia"
         # max index length of the chunked content
@@ -128,6 +144,8 @@ enableEmoji = true
           avatarURL = "/images/linoscope-profile-square.jpg"
           # title shown in home page (HTML format is supported)
           title = "The Linoscope Machine"
+          # subtitle shown in home page
+          # subtitle = "About programming"
           # whether to use typeit animation for subtitle
           typeit = false
           # whether to show social links
@@ -571,7 +589,7 @@ enableEmoji = true
   # Analytics config
   # 网站分析配置
   [params.analytics]
-    enable = false
+    enable = true
     # Google Analytics
     [params.analytics.google]
       id = ""
