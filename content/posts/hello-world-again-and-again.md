@@ -7,14 +7,14 @@ draft: false
 author: ""
 authorLink: ""
 description: "Updated: this is a description of hello world"
-images: ["/images/camlboy-eyecatch.png"]
+images: ["/images/camlboy-featured.jpg"]
 tags: []
 categories: []
 
 hiddenFromHomePage: false
 hiddenFromSearch: false
 
-featuredImage: ""
+featuredImage: "/images/camlboy-featured.jpg"
 featuredImagePreview: ""
 
 toc:
