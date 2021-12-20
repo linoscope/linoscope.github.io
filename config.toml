@@ -592,7 +592,7 @@ enableEmoji = true
     enable = true
     # Google Analytics
     [params.analytics.google]
-      id = ""
+      id = "UA-215393498-2"
       # whether to anonymize IP
       # 是否匿名化用户 IP
       anonymizeIP = true
