@@ -7,7 +7,7 @@ draft: false
 author: ""
 authorLink: ""
 description: "Updated: this is a description of hello world"
-images: ["/images/camlboy-card.jpg"]
+images: ["/images/camlboy-card-2.jpg"]
 tags: []
 categories: []
 
