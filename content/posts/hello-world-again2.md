@@ -7,15 +7,15 @@ draft: false
 author: ""
 authorLink: ""
 description: "For the past few months, I have been working on a project called CAMLBOY, a Game Boy emulator that runs in the browser. It is written in OCaml and compiled to JavaScript via js_of_ocaml."
-images: ["/images/camlboy-card.jpg"]
+images: ["/images/camlboy-card-4.jpg"]
 tags: []
 categories: []
 
 hiddenFromHomePage: false
 hiddenFromSearch: false
 
-featuredImage: "/images/camlboy-card.jpg"
-featuredImagePreview: "/images/camlboy-card.jpg"
+featuredImage: "/images/camlboy-card-4.jpg"
+featuredImagePreview: "/images/camlboy-card-4.jpg"
 
 toc:
   enable: true
