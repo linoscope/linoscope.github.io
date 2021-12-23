@@ -3,7 +3,7 @@ title: "About"
 subtitle: ""
 date: 2021-12-22T01:39:04+09:00
 lastmod: 2021-12-22T01:39:04+09:00
-draft: true
+draft: false
 author: ""
 authorLink: ""
 description: ""
