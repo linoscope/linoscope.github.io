@@ -17,7 +17,7 @@
 <meta name=application-name content="The Linoscope Machine">
 <meta name=apple-mobile-web-app-title content="The Linoscope Machine"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://linoscope.github.io/writing-a-game-boy-emulator-in-ocaml/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Writing a Game Boy Emulator in OCaml","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/linoscope.github.io\/writing-a-game-boy-emulator-in-ocaml\/"},"genre":"posts","wordcount":5888,"url":"https:\/\/linoscope.github.io\/writing-a-game-boy-emulator-in-ocaml\/","datePublished":"2022-01-11T00:00:00+00:00","dateModified":"2022-01-11T00:00:00+00:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"linoscope","logo":{"@type":"ImageObject","url":"https:\/\/linoscope.github.io\/images\/linoscope-profile-square.jpg","width":511,"height":511}},"author":{"@type":"Person","name":"linoscope"},"description":"For the past few months, I have been working on a project called CAMLBOY, a Game Boy emulator that runs in the browser."}</script></head>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://linoscope.github.io/writing-a-game-boy-emulator-in-ocaml/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Writing a Game Boy Emulator in OCaml","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/linoscope.github.io\/writing-a-game-boy-emulator-in-ocaml\/"},"genre":"posts","wordcount":5867,"url":"https:\/\/linoscope.github.io\/writing-a-game-boy-emulator-in-ocaml\/","datePublished":"2022-01-11T00:00:00+00:00","dateModified":"2022-01-11T00:00:00+00:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"linoscope","logo":{"@type":"ImageObject","url":"https:\/\/linoscope.github.io\/images\/linoscope-profile-square.jpg","width":511,"height":511}},"author":{"@type":"Person","name":"linoscope"},"description":"For the past few months, I have been working on a project called CAMLBOY, a Game Boy emulator that runs in the browser."}</script></head>
 <body header-desktop=normal header-mobile=normal><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':'light'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'light'==='dark')&&document.body.setAttribute('theme','dark')</script>
 <div id=mask></div><div class=wrapper><header class=desktop id=header-desktop>
 <div class=header-wrapper>
@@ -58,7 +58,7 @@
 <div class=toc-content id=toc-content-auto></div>
 </div><article class="page single"><h1 class="single-title animated flipInX">Writing a Game Boy Emulator in OCaml</h1><div class=post-meta>
 <div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>linoscope</a></span></div>
-<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-01-11>2022-01-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;5888 words&nbsp;
+<div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-01-11>2022-01-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;5867 words&nbsp;
 <i class="far fa-clock fa-fw"></i>&nbsp;28 minutes&nbsp;</div>
 </div><div class=featured-image><img class=lazyload src=/svg/loading.min.svg data-src=/images/camlboy-header.png data-srcset="/images/camlboy-header.png, /images/camlboy-header.png 1.5x, /images/camlboy-header.png 2x" data-sizes=auto alt=/images/camlboy-header.png title="For the past few months, I have been working on a project called CAMLBOY, a Game Boy emulator that runs in the browser."></div><div class="details toc" id=toc-static kept>
 <div class="details-summary toc-title">
@@ -183,14 +183,14 @@
 <li>It has clear specifications, so there is no need to think about what to implement.</li>
 <li>It is complex enough that it cannot be completed in a few days or weeks.</li>
 <li>It is not so complex that it can&rsquo;t be completed in a few months.</li>
-<li>I have fond childhood memories of playing the Game Boy<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup>.</li>
+<li>I have fond childhood memories of playing the Game Boy.</li>
 </ul>
 <p>I set the following goals for the emulator:</p>
 <ul>
 <li>Write code with an emphasis on readability and maintainability.</li>
 <li>Compile to JavaScript using <a href=https://github.com/ocsigen/js_of_ocaml target=_blank rel="noopener noreffer">js_of_ocaml</a> and run it in the browser.</li>
 <li>Achieve playable FPS in the smartphone browser.</li>
-<li>Implement some benchmarks and compare various compiler backends<sup id=fnref:4><a href=#fn:4 class=footnote-ref role=doc-noteref>4</a></sup>.</li>
+<li>Implement some benchmarks and compare various compiler backends<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup>.</li>
 </ul>
 <h2 id=goal-of-this-article>Goal of this article</h2>
 <p>This article aims to take you through the journey of creating a Game Boy emulator in OCaml.</p>
@@ -216,7 +216,7 @@
 <p>You can find materials about these uncovered topics in the <a href=#recommended-materials rel>Recommended Materials</a> section.</p>
 <h1 id=implementation>Implementation</h1>
 <h2 id=architecture-diagram>Architecture diagram</h2>
-<p>A schematic diagram of CAMLBOY looks like this:<sup id=fnref:5><a href=#fn:5 class=footnote-ref role=doc-noteref>5</a></sup></p>
+<p>A schematic diagram of CAMLBOY looks like this:<sup id=fnref:4><a href=#fn:4 class=footnote-ref role=doc-noteref>4</a></sup></p>
 <div align=center>
 <img src=/images/camlboy-architecture.png alt="camlboy architecture" title=camlboy-architecture>
 </div>
@@ -227,7 +227,7 @@
 <li>Hardware modules connected to the bus implement the interface <code>Addressable_intf.S</code> (which I will explain later)</li>
 <li>The bus implements the interface <code>Word_addressable_intf.S</code> (which I will explain later)</li>
 <li>There are various types of cartridges.</li>
-<li>The timer, GPU, Serial Port, and Joypad can request interrupts. The Interrupt Controller will notify the requested interrupt to the CPU (further explanation of interrupts will be omitted in this article).</li>
+<li>The timer, GPU, serial port, and joypad can request interrupts. The interrupt controller will notify the requested interrupt to the CPU (further explanation of interrupts will be omitted in this article).</li>
 </ul>
 <h2 id=main-loop>Main loop</h2>
 <p>The main loop is responsible for progressing the clocked hardware modules (highlighted in red below) in a synchronized way.</p>
@@ -264,7 +264,7 @@
 <li>Write a signature (<code>module type S = sig ... end</code>).</li>
 <li>Include it (<code>include S with type t := t </code>).</li>
 </ol>
-<p>Following these steps, we define the signature <code>Addressable_intf.S</code> as below<sup id=fnref:6><a href=#fn:6 class=footnote-ref role=doc-noteref>6</a></sup>.</p>
+<p>Following these steps, we define the signature <code>Addressable_intf.S</code> as below<sup id=fnref:5><a href=#fn:5 class=footnote-ref role=doc-noteref>5</a></sup>.</p>
 <div class=highlight><pre tabindex=0 class=chroma><code class=language-OCaml data-lang=OCaml><span class=c>(* addressable_intf.mli *)</span>
 <span class=k>module</span> <span class=k>type</span> <span class=nc>S</span> <span class=o>=</span> <span class=k>sig</span>
   <span class=k>type</span> <span class=n>t</span>
@@ -687,7 +687,7 @@
 <li>Indicate which aspect of the emulator is failing.</li>
 <li>Runs even if some core functionality of the emulator is missing.</li>
 </ul>
-<p>Test ROMs typically output the test results to the display<sup id=fnref:7><a href=#fn:7 class=footnote-ref role=doc-noteref>7</a></sup>. For example, <a href=https://github.com/Gekkio/mooneye-test-suite target=_blank rel="noopener noreffer">mooneye test ROMs</a> results look like below. The text displayed in the failure case is the register dump and assertion failure information.</p>
+<p>Test ROMs typically output the test results to the display<sup id=fnref:6><a href=#fn:6 class=footnote-ref role=doc-noteref>6</a></sup>. For example, <a href=https://github.com/Gekkio/mooneye-test-suite target=_blank rel="noopener noreffer">mooneye test ROMs</a> results look like below. The text displayed in the failure case is the register dump and assertion failure information.</p>
 <div>
 <img src=/images/test_rom_failed.png alt="test rom failed" title=test-rom-failed>
 <img src=/images/test_rom_success.png alt="test rom success" title=test-rom-success>
@@ -729,7 +729,7 @@
 </div>
 <p>Now started the journey of optimization.</p>
 <h3 id=finding-bottlenecks-with-a-profiler>Finding bottlenecks with a profiler</h3>
-<p>The first thing I did was use Chrome&rsquo;s profiler<sup id=fnref:8><a href=#fn:8 class=footnote-ref role=doc-noteref>8</a></sup> and find out the bottlenecks. Here are the results:</p>
+<p>The first thing I did was use Chrome&rsquo;s profiler<sup id=fnref:7><a href=#fn:7 class=footnote-ref role=doc-noteref>7</a></sup> and find out the bottlenecks. Here are the results:</p>
 <div>
 <img src=/images/profile-result.png alt="profile result" title=profile-result>
 </div>
@@ -775,7 +775,7 @@
 <img src=/images/after-optimize-native.gif alt="after optimize native" title=after-optimize-native>
 </div>
 <h2 id=some-benchmarks>Some benchmarks</h2>
-<p>I implemented a <em>headless benchmarking mode</em> to run the emulator without UI. I measured the FPS in various OCaml compiler backends, and the result was as follows:<sup id=fnref:9><a href=#fn:9 class=footnote-ref role=doc-noteref>9</a></sup></p>
+<p>I implemented a <em>headless benchmarking mode</em> to run the emulator without UI. I measured the FPS in various OCaml compiler backends, and the result was as follows:<sup id=fnref:8><a href=#fn:8 class=footnote-ref role=doc-noteref>8</a></sup></p>
 <div>
 <img src=/images/benchmark-result.png alt="benchmark result" title=benchmark-result>
 </div>
@@ -834,7 +834,7 @@
 </ul>
 <p>The motivation for converting a module into a functor is to change (a), but converting a module to a functor also changes (b). In other words, <strong>converting a module to a functor not only changes how the module <em>depends on</em> other modules, but it also changes how it is <em>dependend on by</em> other modules</strong>.</p>
 <p>This will be a bigger problem if many modules depend on <code>B</code> or if we have a deeper dependency graph.</p>
-<p>Note that this won&rsquo;t happen in the OOP paradigm. Changing class <code>B</code> &rsquo;s constructor to take an interface <code>C_intf</code> instead of a concrete class <code>C</code> will not change the type of class <code>B</code> itself.<sup id=fnref:10><a href=#fn:10 class=footnote-ref role=doc-noteref>10</a></sup></p>
+<p>Note that this won&rsquo;t happen in the OOP paradigm. Changing class <code>B</code> &rsquo;s constructor to take an interface <code>C_intf</code> instead of a concrete class <code>C</code> will not change the type of class <code>B</code> itself.<sup id=fnref:9><a href=#fn:9 class=footnote-ref role=doc-noteref>9</a></sup></p>
 <p>While working on CAMLBOY, I ran into this problem when I tried to make the cartridge implementation switchable at runtime (I had the dependency graph of <code>Camlboy</code> -> <code>Bus</code> -> <code>Cartridge</code> and wanted just to decouple the <code>Bus</code> -> <code>Cartridge</code> part).</p>
 <h1 id=recommended-materials>Recommended Materials</h1>
 <h2 id=about-ocaml>About OCaml</h2>
@@ -888,28 +888,25 @@
 <p>By &ldquo;advanced language features,&rdquo; I&rsquo;m thinking of OCaml&rsquo;s functors, GADTs, first-class modules, etc.&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
 </li>
 <li id=fn:3 role=doc-endnote>
-<p>I still remember the exciting feeling of hiding under the covers with a flashlight to play the Game Boy after bedtime.&#160;<a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+<p>Emulators are a somewhat popular benchmark target among various languages/runtimes. For example, <a href=https://github.com/mame/optcarrot target=_blank rel="noopener noreffer">an NES emulator</a> is used in the Ruby world to benchmark different Ruby runtimes, and the Chrome team seems to have used <a href=https://github.com/chromium/octane/blob/master/gbemu-part1.js target=_blank rel="noopener noreffer">a Game Boy emulator</a> for benchmarking their JS engine.&#160;<a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
 </li>
 <li id=fn:4 role=doc-endnote>
-<p>Emulators are a somewhat popular benchmark target among various languages/runtimes. For example, <a href=https://github.com/mame/optcarrot target=_blank rel="noopener noreffer">an NES emulator</a> is used in the Ruby world to benchmark different Ruby runtimes, and the Chrome team seems to have used <a href=https://github.com/chromium/octane/blob/master/gbemu-part1.js target=_blank rel="noopener noreffer">a Game Boy emulator</a> for benchmarking their JS engine.&#160;<a href=#fnref:4 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+<p>Note that this is a sketch of my implementation and NOT a sketch of the actual Game Boy hardware. Also, I omitted components that I haven&rsquo;t implemented yet, such as APU (Audio Processing Unit), from the diagram.&#160;<a href=#fnref:4 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
 </li>
 <li id=fn:5 role=doc-endnote>
-<p>Note that this is a sketch of my implementation and NOT a sketch of the actual Game Boy hardware. Also, I omitted components that I haven&rsquo;t implemented yet, such as APU (Audio Processing Unit), from the diagram.&#160;<a href=#fnref:5 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+<p>The <code>uint8</code> and <code>uint16</code> in the code are not OCaml built-in types but are types from a custom unsinged int module (<code>units.mli</code>, <code>units.ml</code>).&#160;<a href=#fnref:5 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
 </li>
 <li id=fn:6 role=doc-endnote>
-<p>The <code>uint8</code> and <code>uint16</code> in the code are not OCaml built-in types but are types from a custom unsinged int module (<code>units.mli</code>, <code>units.ml</code>).&#160;<a href=#fnref:6 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+<p>Some test ROMs, such as <a href=https://github.com/retrio/gb-test-roms target=_blank rel="noopener noreffer">blargg test roms</a>, output the test results to the serial port as ASCII characters. This enables testing the emulator even before implementing the GPU.&#160;<a href=#fnref:6 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
 </li>
 <li id=fn:7 role=doc-endnote>
-<p>Some test ROMs, such as <a href=https://github.com/retrio/gb-test-roms target=_blank rel="noopener noreffer">blargg test roms</a>, output the test results to the serial port as ASCII characters. This enables testing the emulator even before implementing the GPU.&#160;<a href=#fnref:7 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+<p>Being able to use Chrome&rsquo;s profiler was a nice side effect of compiling to JS.&#160;<a href=#fnref:7 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
 </li>
 <li id=fn:8 role=doc-endnote>
-<p>Being able to use Chrome&rsquo;s profiler was a nice side effect of compiling to JS.&#160;<a href=#fnref:8 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+<p>Note that this benchmark is for comparing OCaml backends and can not be used to compare the FPS with other Game Boy emulators. This is because the performance of an emulator depends significantly on how accurate it is and how much functionality it has. For example, CALMBOY does not implement the APU (Audio Processing Unit), so there is no point comparing its FPS with emulators that have APU support.&#160;<a href=#fnref:8 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
 </li>
 <li id=fn:9 role=doc-endnote>
-<p>Note that this benchmark is for comparing OCaml backends and can not be used to compare the FPS with other Game Boy emulators. This is because the performance of an emulator depends significantly on how accurate it is and how much functionality it has. For example, CALMBOY does not implement the APU (Audio Processing Unit), so there is no point comparing its FPS with emulators that have APU support.&#160;<a href=#fnref:9 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
-</li>
-<li id=fn:10 role=doc-endnote>
-<p>But OOP comes with the cost of <a href=https://en.wikipedia.org/wiki/Dynamic_dispatch target=_blank rel="noopener noreffer">dynamic dispatch</a>, which may or may not be a problem depending on your use case. Also, although OCaml supports OOP, using them might limit the readers of your code since many people (including myself) are unfamiliar with the OOP aspect of OCaml.&#160;<a href=#fnref:10 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+<p>But OOP comes with the cost of <a href=https://en.wikipedia.org/wiki/Dynamic_dispatch target=_blank rel="noopener noreffer">dynamic dispatch</a>, which may or may not be a problem depending on your use case. Also, although OCaml supports OOP, using them might limit the readers of your code since many people (including myself) are unfamiliar with the OOP aspect of OCaml.&#160;<a href=#fnref:9 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
 </li>
 </ol>
 </section>
