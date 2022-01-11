@@ -64,9 +64,7 @@ I choose a Game Boy emulator as the project for the following reasons:
 - It has clear specifications, so there is no need to think about what to implement.
 - It is complex enough that it cannot be completed in a few days or weeks.
 - It is not so complex that it can't be completed in a few months.
-- I have fond childhood memories of playing the Game Boy[^99].
-
-[^99]: I still remember the exciting feeling of hiding under the covers with a flashlight to play the Game Boy after bedtime.
+- I have fond childhood memories of playing the Game Boy.
 
 I set the following goals for the emulator:
 
@@ -121,7 +119,7 @@ I'll explain the details as needed, but in a nutshell:
 - Hardware modules connected to the bus implement the interface `Addressable_intf.S` (which I will explain later)
 - The bus implements the interface `Word_addressable_intf.S` (which I will explain later)
 - There are various types of cartridges.
-- The timer, GPU, Serial Port, and Joypad can request interrupts. The Interrupt Controller will notify the requested interrupt to the CPU (further explanation of interrupts will be omitted in this article).
+- The timer, GPU, serial port, and joypad can request interrupts. The interrupt controller will notify the requested interrupt to the CPU (further explanation of interrupts will be omitted in this article).
 
 ## Main loop
 
