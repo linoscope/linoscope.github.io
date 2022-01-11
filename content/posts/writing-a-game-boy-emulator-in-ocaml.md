@@ -1,110 +1,143 @@
 ---
-title: "Writing a Game Boy emulator in OCaml"
-date: 2021-12-19T23:14:28+09:00
+title: "Writing a Game Boy Emulator in OCaml"
+date: 2022-01-11
 draft: true
+description: "For the past few months, I have been working on a project called CAMLBOY, a Game Boy emulator that runs in the browser."
+images: ["/images/camlboy-header.png"]
+featuredImage: "/images/camlboy-header.png"
+featuredImagePreview: "/images/camlboy-header.png"
+
+hiddenFromHomePage: false
+hiddenFromSearch: false
+
+toc:
+  enable: true
+math:
+  enable: false
+lightgallery: false
+license: ""
 ---
 
-## Intro
+# Introduction
 
-For the past few months, I have been working on a project called CAMLBOY, a Game Boy emulator that runs in the browser. It is written in OCaml and compiled to JavaScript via js_of_ocaml. You can try it out on the following demo page.
+For the past few months, I have been working on a project called _CAMLBOY_, a Game Boy emulator written in OCaml that runs in the browser. You can try it out on the following demo page:
 
 **[Demo Page](https://linoscope.github.io/CAMLBOY/)**
 
-You can find the source code here.
+I included several homebrew ROMs in the demo so please try them out (I recommend _Bouncing ball_ and _Rocket Man Demo_). The emulator runs at 60 FPS in recent smartphones so you can also play with it in your mobile browser.
 
-https://github.com/linoscope/CAMLBOY
+## Repository
 
-{{< rawhtml >}}
+You can find the repository here:
 
-<script async defer src="https://buttons.github.io/buttons.js"></script>
+**https://github.com/linoscope/CAMLBOY**
 
-<a class="github-button" href="https://github.com/linoscope/CAMLBOY" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star linoscope/CAMLBOY on GitHub">Star</a>
-<a class="github-button" href="https://github.com/linoscope/CAMLBOY/fork" data-icon="octicon-repo-forked" data-size="large" data-show-count="true" aria-label="Fork linoscope/CAMLBOY on GitHub">Fork</a>
-{{< /rawhtml >}}
+{{< rawhtml >}}<script async defer src="https://buttons.github.io/buttons.js"></script><a class="github-button" href="https://github.com/linoscope/CAMLBOY" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star linoscope/CAMLBOY on GitHub">Star</a><a class="github-button" href="https://github.com/linoscope/CAMLBOY/fork" data-icon="octicon-repo-forked" data-size="large" data-show-count="true" aria-label="Fork linoscope/CAMLBOY on GitHub">Fork</a>{{< /rawhtml >}}
 
 ## Screenshots
 
-|                 　　　　　　　　 　　　　　　　　 　　　　　　　　　　　　　　　　　　　　　　　　　                 |
-| :------------------------------------------------------------------------------------------------------------------: |
-| ![hoge](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/675652/669ab304-85a0-8cd6-5885-0074a0575b7a.gif) |
+<div align="center">
+  <img src="/images/pokemon-vs-green.gif" alt="pokemon vs greef gif" title="pokemon-vs-green">
+</div>
 
 <div align="center">
-  <img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/675652/7b13e3f2-bac6-3f32-57dd-7827bdc9be0c.gif" alt="zelda-gif" title="zelda-gif">
-  <img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/675652/fc55e81a-323d-ffa2-b0f7-8e313cc60f1e.gif" alt="kirby-gif" title="kirby-gif">
-  <img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/675652/ae8fb9a3-7ab8-23a0-16ba-9491168aa4c0.gif" alt="tetris-gif" title="tetris-gif">
-  <img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/675652/420cc384-2653-64e1-0a81-3de6ff983b00.gif" alt="donkykong-gif" title="donkykong-gif">
+  <img src="/images/zelda-opening.gif" alt="zelda-gif" title="zelda-gif">
+  <img src="/images/kirby-opening.gif" alt="kirby-gif" title="kirby-gif">
+  <img src="/images/tetris-opening.gif" alt="tetris-gif" title="tetris-gif">
+  <img src="/images/donkykong-opening.gif" alt="donkykong-gif" title="donkykong-gif">
 </div>
 
 ## Why implement a Game Boy emulator in OCaml?
 
 Have you ever felt like the following when learning a new programming language?
 
-- You can write simple program snippets, but **you don't know how to write medium or large scale code[^1]**
-- You have studied advanced language features[^2] and have a rough understanding of how they work, but **you don't know how to use them in practice**
+- You can write simple program snippets but **you don't know how to write medium/large scale code[^1]**.
+- You have studied **advanced language features[^2]** and have a rough understanding of how they work, but **you don't know how to use them in practice**.
 
-[^1]: The rough definition of _medium or large scale code_ here is "code that is difficult to develop without tests, and as a result, must be designed so that it is easy to write tests." I believe that "writing code that is easy to test" is something that is rarely mentioned in textbooks or introductory language books but is essential in practice.
-[^2]: By "advanced language features" I'm thinking of OCaml's functors, GADTs, first-class modules, etc.
+[^1]: The rough definition of "medium/large scale code" here is "code that is difficult to develop without tests, and as a result, must be designed in an easily testable way." I believe that writing easily testable code is rarely mentioned in introductory books but is essential in practice.
+[^2]: By "advanced language features," I'm thinking of OCaml's functors, GADTs, first-class modules, etc.
 
-These were exactly my thoughts when I was studying OCaml a few months ago. I understood the basics by reading books and implementing simple algorithms, but the above two points prevented me from feeling like I could _really_ write OCaml. I thought that the only way to get out of this situation was to get some practice, so I started looking for a project to work on.
+These were exactly my thoughts when I started to seriously study OCaml a few months ago. I understood the basics of the language by reading books and implementing simple algorithms, but the above two "don't know"s prevented me from feeling like I could _really_ write OCaml. I knew that the only way to get out of this situation was practice, so I started looking for a project to work on.
 
-Why did I choose a Game Boy emulator for the project? It was for the following reasons:
+I choose a Game Boy emulator as the project for the following reasons:
 
-- The specifications are clear, so there is no need to think about what to implement.
+- It has clear specifications, so there is no need to think about what to implement.
 - It is complex enough that it cannot be completed in a few days or weeks.
-- It's not so complex that it can't be completed in a few months.
-- I have fond childhood memories of playing the Game Boy.
+- It is not so complex that it can't be completed in a few months.
+- I have fond childhood memories of playing the Game Boy[^99].
 
-The goals I set for the emulator was as follows:
+[^99]: I still remember the exciting feeling of hiding under the covers with a flashlight to play the Game Boy after bedtime.
+
+I set the following goals for the emulator:
 
 - Write code with an emphasis on readability and maintainability.
-- Compile the emulator to JS using js_of_ocaml and run it in the browser.
+- Compile to JavaScript using [js_of_ocaml](https://github.com/ocsigen/js_of_ocaml) and run it in the browser.
 - Achieve playable FPS in the smartphone browser.
 - Implement some benchmarks and compare various compiler backends[^3].
 
-[^3]: Emulators are a pretty popular benchmark target. For example, [a NES emulator](https://github.com/mame/optcarrot) is used in the Ruby world to benchmark various Ruby runtimes. Also, the chrome team seems to have used [a Game Boy emulator](https://github.com/chromium/octane/blob/master/gbemu-part1.js) for benchmarking their JS engine.
+[^3]: Emulators are a somewhat popular benchmark target among various languages/runtimes. For example, [an NES emulator](https://github.com/mame/optcarrot) is used in the Ruby world to benchmark different Ruby runtimes, and the Chrome team seems to have used [a Game Boy emulator](https://github.com/chromium/octane/blob/master/gbemu-part1.js) for benchmarking their JS engine.
 
 ## Goal of this article
 
-This article aims to share the experience of writing a Game Boy emulator in OCaml.
+This article aims to take you through the journey of creating a Game Boy emulator in OCaml.
 
-This article is for you if you are:
+This article is for you if you are interested in what it is like to
 
-- Interested in what it is like to implement a middle-scale project in OCaml.
-- Interested in how you can use advanced features in OCaml in practice.
+- Implement a Game Boy emulator.
+- Implement a middle-scale project in OCaml.
+- Use advanced features of OCaml in practice.
 
-This article is not for you if you are:
+We will cover things like
 
-- Not familiar with basic OCaml syntax.
-- Just looking for a detailed explanation of the Game Boy's architecture
+- Overview of the Game Boy architecture.
+- How to structure your code in a testable and reusable way.
+- How to use functors, GADTs, and first-class modules in practice.
+- How to find bottlenecks and improve performance.
+- General thoughts on OCaml.
 
-Materials that cover these points are listed in the "Recommended Materials" section at the end.
+We will not cover things like
+
+- Basic OCaml syntax
+- Details of the Game Boy architecture
+
+You can find materials about these uncovered topics in the [Recommended Materials](#recommended-materials) section.
 
 # Implementation
 
 ## Architecture diagram
 
-A schematic diagram of the CAMLBOY looks like this[^4].
+A schematic diagram of CAMLBOY looks like this:[^4]
 
-[^4]: Note that this is a sketch of my implementation and NOT a sketch of the actual Game Boy hardware. Also, components that haven't been implemented yet, such as APU (Audio Processing Unit), are omitted from the diagram.
+[^4]: Note that this is a sketch of my implementation and NOT a sketch of the actual Game Boy hardware. Also, I omitted components that I haven't implemented yet, such as APU (Audio Processing Unit), from the diagram.
 
-![camlboy-architecture-2.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/675652/e018f108-abd5-56cd-9680-c00ffc711fee.png)
+<div align="center">
+  <img src="/images/camlboy-architecture.png" alt="camlboy architecture" title="camlboy-architecture">
+</div>
 
-I'll explain the details as needed but in a nutshell.
+I'll explain the details as needed, but in a nutshell:
 
-- The CPU/Timer/GPU operates at a fixed rate according to a clock.
-- The Bus sits between the CPU and various hardware modules and routes data reads/writes based on the given address.
-- There are various types of cartridges, and the implementation of the cartridge changes according to the type.
-- The Timer, GPU, Serial Port, and Joypad can request interrupts, which are then notified to the CPU via the Interrupt Controller.
+- The CPU/timer/GPU operates at a fixed rate according to a clock.
+- The bus sits between the CPU and various hardware modules and routes data reads/writes based on the given address. For example, writes to address `0xFFFF` is routed to the interrupt controller, and enables/disables interrupts based on the written value.
+- Hardware modules connected to the bus implement the interface `Addressable_intf.S` (which I will explain later)
+- The bus implements the interface `Word_addressable_intf.S` (which I will explain later)
+- There are various types of cartridges.
+- The timer, GPU, Serial Port, and Joypad can request interrupts. The Interrupt Controller will notify the requested interrupt to the CPU (further explanation of interrupts will be omitted in this article).
 
 ## Main loop
 
-The CPU/Timer/GPU share the same hardware clock in real hardware, so they naturally run in a synchronized state. On the other hand, the emulator is just a large sequential execution loop, so we need to devise a way to reproduce the synchronization between these components. To do so, I implemented the main loop to contain the following steps:
+The main loop is responsible for progressing the clocked hardware modules (highlighted in red below) in a synchronized way.
 
-- Let the CPU execute one instruction and keep track of how many cycles were consumed as a result.
-- Advance the Timer by the number of cycles consumed by the CPU.
-- Advance the GPU by the number of cycles consumed by the CPU.
+<div align="center">
+  <img src="/images/camlboy-architecture-clocked.png" alt="camlboy architecture clocked" title="camlboy-architecture-clocked">
+</div>
 
-This is sometimes called the _catch up method_ because it makes the Timer and GPU "catch up" with the CPU. Here is the implementation.
+In real hardware, the CPU/timer/GPU share the same hardware clock, so they naturally run in a synchronized state. On the other hand, the emulator is just a sequential execution loop, so we need to devise a way to reproduce the synchronization between these components. To do so, the main loop contains the following steps:
+
+1. Let the CPU execute one instruction and keep track of the number of cycles consumed as a result.
+1. Advance the timer by the number of cycles consumed by the CPU.
+1. Advance the GPU by the number of cycles consumed by the CPU.
+
+We sometimes call this the _catch up method_ because it makes the timer and GPU "catch up" with the CPU. Here is the implementation:
 
 ```OCaml
 (* camlboy.ml *)
@@ -116,39 +149,49 @@ let run_instruction t =
 
 ## Interface for reading/writing data
 
-We will first look at the signatures for reading and writing data, as we will need them for future explanations.
+We will look at some basic interfaces used throughout the emulator.
 
 ### Interface for reading/writing 8-bit data
 
-The Bus can read and write 8-bit data from various hardware modules such as GPU and RAM. Since we will be implementing many modules that can read and write 8-bit data, we would like to share their interface in some form.
+First, let's look at the interface for reading/writing 8-bit data, which is used in the red line below.
 
-With OOP, you can:
+<div align="center">
+  <img src="/images/camlboy-architecture-addressable.png" alt="camlboy architecture addressable" title="camlboy-architecture-addressable">
+</div>
 
-> Write the interface (`public interface A {...}` in Java) and implement it (`implements A` in Java)
+The Bus can read and write 8-bit data from various hardware modules such as GPU and RAM. Since we will be implementing many modules that can read and write 8-bit data, we'd like to share their interface in some form.
 
-With OCaml, you can:
+With OOP, you would
 
-> Write a signature (`module type S = sig ... end`) and include it (`include S with type t := t `).
+1. Write an interface (`public interface A {...}` in Java).
+1. Implement it (`implements A` in Java).
 
-Let's follow these steps to define a module that reads/writes 8-bit data.
+With OCaml, you can
 
-First, we define the signature `Addressable_intf.S` to indicate that a module can read and write 8-bit data as below [^5].
+1. Write a signature (`module type S = sig ... end`).
+1. Include it (`include S with type t := t `).
 
-The `read_byte` function reads 8-bit data from address `addr`. The `write_byte` function writes 8-bit data from address `addr`. The `accepts` function returns `true` if it accepts reads/writes from `addr` and returns `false` if we can not.
+Hence to define a module that reads/writes 8-bit data, we can
+
+1.  Write a signature `Addressable_intf.S` with 8-bit read/write functions.
+1.  Include it in RAM, GPU, etc.
+
+Following these steps, we define the signature `Addressable_intf.S` as below. Note that the `uint8` and `uint16` in the code are not OCaml built-in types but are types from a custom unsinged int module (`units.mli`, `units.ml`).
 
 ```OCaml
 (* addressable_intf.mli *)
 module type S = sig
   type t
+  (* reads 8-bit data from address addr *)
   val read_byte : t -> uint16 -> uint8
+  (* writes 8-bit data to address addr *)
   val write_byte : t -> addr:uint16 -> data:uint8 -> unit
+  (* returns true if it accepts reads/writes from addr and returns false if it can not *)
   val accepts : t -> uint16 -> bool
 end
 ```
 
-[^5]: The `uint8` and `uint16` in the code are not OCaml built-in types but are types from my unsinged int module (`uints.mli`, `units.ml`). The implementation details are omitted in this article.
-
-And when you write a module that can read/write 8-bit data, you can include this `Addressable_intf.S` in the interface file. For example, the RAM module's interface file `ram.mli` looks like this.
+Then we would include `Addressable_intf.S` in the interface files of modules that provide 8-bit reads/writes. For example, the RAM module's interface file `ram.mli` looks like this:
 
 ```OCaml
 (* ram.mli *)
@@ -157,37 +200,51 @@ type t
 include Addressable_intf.S with type t := t
 ```
 
-In the same way, `gpu.mli`, `joypad.mli`, `timer.mli`, etc, include this `Addressable_intf.S`.
+In the same way, `gpu.mli`, `joypad.mli`, `timer.mli`, etc, include `Addressable_intf.S`.
 
-> **Notes on `with type t := t`** <br><br>
-> The `with type t := t` in the above code may need explanation. In general, `A with type t := s` replaces the type `t` in the signature `A` with the type `s`. So `include Addressable_intfS with type t := t` means:
->
-> > replace type `t` in `Addressable_intfS` with type `t` in `Ram`, and then `include` ("expand" it here)
-> > In other words, `ram.mli` is the same as the following:
->
-> ```OCaml
-> (* ram.mli *)
-> type t
-> ...
-> (* include Addressable_intf.S with type t := t will be "expanded" as the following *)
-> val read_byte : t -> uint16 -> uint8
-> val write_byte : t -> addr:uint16 -> data:uint8 -> unit
-> val accepts : t -> uint16 -> bool
-> ```
+**Note**
 
-### Interface for reading/writing 8-bit and 16-bit data
+The `with type t := t` in the above code may need explanation. In general, `A with type t := s` replaces `t` in the signature `A` with `s`. So `include Addressable_intfS with type t := t` means:
 
-Between the CPU and the Bus, 16-bit data can also be read/write in addition to 8-bit data. In this case, it would be nice if we could somehow "extend" the interface for 8-bit data read/write (`Addressable_intf.S`) with 16-bit read/write functions.
+_replace type `t` in `Addressable_intfS` with type `t` in `Ram`, and then `include` ("expand" it here)_.
 
-In OOP, such extension of interface can be done by:
+In other words, the above `ram.mli` is the same as the following:
 
-> Inheriting the interface (`extends A` in Java)
+```OCaml
+(* ram.mli *)
+type t
+...
+(* include Addressable_intf.S with type t := t will be "expanded" as the following *)
+val read_byte : t -> uint16 -> uint8
+val write_byte : t -> addr:uint16 -> data:uint8 -> unit
+val accepts : t -> uint16 -> bool
+```
 
-With OCaml, you can:
+### Interface for reading/writing 16-bit data
 
-> Include the signature (`include A with type t := t `)
+Next, let's look at the interface for reading/writing 16-bit data, which is used in the red line below.
 
-Concretely, you can define a signature called `Word_addressable_intf.S`, include `Addressable_intf.S`, and add additional functions (`read_word` and `write_word`) like this.
+<div align="center">
+  <img src="/images/camlboy-architecture-word-addressable.png" alt="camlboy architecture word addressable" title="camlboy-architecture-word-addressable">
+</div>
+
+Between the CPU and the bus, in addition to 8-bit data, 16-bit data can also be read/written. In this case, it would be nice if we could somehow "extend" the interface for 8-bit data read/write (`Addressable_intf.S`) with 16-bit read/write functions.
+
+In OOP, you would
+
+1. Inherit the interface (`extends A` in Java).
+
+With OCaml, you can
+
+1. Include the signature (`include A with type t := t `).
+
+Hence to extend `Addressable_intf.S` with 16-bit reads/writes, we can
+
+1. Define a signature called `Word_addressable_intf.S`.
+1. Include `Addressable_intf.S`
+1. Add additional functions (`read_word` and `write_word`)
+
+Resulting in this definition:
 
 ```OCaml
 (* word_addressable_intf.ml *)
@@ -195,6 +252,7 @@ Concretely, you can define a signature called `Word_addressable_intf.S`, include
 module type S = sig
   type t
   include Addressable_intf.S with type t := t
+  (* 16-bit reads/writes *)
   val read_word : t -> uint16 -> uint16
   val write_word : t -> addr:uint16 -> data:uint16 -> unit
 end
@@ -202,7 +260,13 @@ end
 
 ## The Bus
 
-The Bus sits between the CPU and various hardware modules and routes data reads/writes based on the given address. For example, read/write to address `0xC000` is routed to the RAM.
+Let's take a look at the implementation of the bus, highlighted in the red box below.
+
+<div align="center">
+  <img src="/images/camlboy-architecture-bus.png" alt="camlboy architecture bus" title="camlboy-architecture-bus">
+</div>
+
+The bus sits between the CPU and various hardware modules, and routes data reads/writes based on the given address. For example, the bus routs read/write to address `0xC000` to the RAM. The full memory map can be found [here](https://gbdev.io/pandocs/Memory_Map.html)
 
 Using the `Word_addressable_intf.S` implemented above, we can define the interface of the bus module (`bus.mli`) as the following.
 
@@ -210,23 +274,15 @@ Using the `Word_addressable_intf.S` implemented above, we can define the interfa
 (* bus.mli *)
 type t
 val create :
-gpu:Gpu.t ->
-timer:Timer.t ->
-wram:Ram.t ->
-... ->
-t
+  gpu:Gpu.t ->
+  timer:Timer.t ->
+  wram:Ram.t ->
+  ... ->
+  t
 include Word_addressable_intf.S with type t := t
 ```
 
-Then, we can implement the bus (`bus.ml`) like below.
-
-The instantiation function `create` takes the modules connected to the bus as its argument.
-
-The `read_byte` function routes the data read to the appropriate module based on the given address.
-
-The `read_word` function is implemented by calling `read_byte` twice[^6].
-
-[^6]: The actual hardware also achieves 16-bit read/write by conducting 8-bit read/write twice.
+Then, we can implement the bus (`bus.ml`) like below:
 
 ```OCaml
 (* bus.ml *)
@@ -237,6 +293,7 @@ type t = {
   ...
 }
 
+(* takes the modules connected to the bus as its argument *)
 let create ~gpu ~timer ~wram ... = {
   gpu;
   timer;
@@ -245,6 +302,7 @@ let create ~gpu ~timer ~wram ... = {
 }
 
 let read_byte t addr =
+  (* routes the data read to the appropriate module based on the given address *)
   match addr with
   | _ when Gpu.accepts t.gpu addr ->
     Gpu.read_byte t.gpu addr
@@ -255,47 +313,52 @@ let read_byte t addr =
   | ...
 
 let read_word t addr =
+  (* The read_word function archives 16-bit reads by calling read_byte twice.
+     The actual hardware also achieves 16-bit read/write by conducting 8-bit read/write twice. *)
   let lo = Uint8.to_int (read_byte t addr) in
   let hi = Uint8.to_int (read_byte t Uint16.(succ addr)) in
   (hi lsl 8) + lo |> Uint16.of_int
 ```
 
-## The CPU
+## Registers
 
-### Registers
+Let's take a look at the implementation of registers, highlighted in the red box below.
 
-To understand the CPU, we must first take a look at the CPU's built-in registers.
+<div align="center">
+  <img src="/images/camlboy-architecture-registers.png" alt="camlboy architecture registers" title="camlboy-architecture-registers">
+</div>
 
-The Game Boy's CPU has eight 8-bit registers, `A`, `B`, `C`, `D`, `E`, `F`, `H`, and `L`. These 8-bit registers can be combined to be used as 16-bit registers `AF`, `BC`, `DE`, and `HL`.
-
-Below is the interface of the `Regsiters` module (implementation is omitted).
-
-`type r` represent identifiers of the 8-bit registers and `type rr` represent identifiers for the 16-bit registers. `read_r`/`write_r` and `read_rr`/`write_rr` are read/write functions for these registers.
+The Game Boy's CPU has eight 8-bit registers, `A`, `B`, `C`, `D`, `E`, `F`, `H`, and `L`. These 8-bit registers can be combined to be used as 16-bit registers `AF`, `BC`, `DE`, and `HL`. Below is the interface of the `Registers` module (implementation is omitted):
 
 ```OCaml
 (* registers.mli *)
 
 type t
+(* identifiers of the 8-bit registers *)
 type r = A | B | C | D | E | F | H | L
+(* identifiers for the 16-bit registers *)
 type rr = AF | BC | DE | HL
+
 ...
+
+(* read/write functions for the above registers *)
 val read_r   : t ->  r -> uint8
 val write_r  : t ->  r -> uint8 -> unit
 val read_rr  : t -> rr -> uint16
 val write_rr : t -> rr -> uint16 -> unit
 ```
 
-### Implementing a testable CPU module
+## The CPU
 
-#### My initial implementation of the CPU
+Let's take a look at the implementation of the CPU, highlighted in the red box below.
 
-Below is my initial implementation of the CPU.
+<div align="center">
+  <img src="/images/camlboy-architecture-cpu.png" alt="camlboy architecture cpu" title="camlboy-architecture-cpu">
+</div>
 
-`create` initializes the CPU.
+### My initial implementation of the CPU
 
-`run_instruction` fetches and decodes the instruction from the program counter address `pc`, then executes the instruction.
-
-Details of the `execute` function are omitted here and will be discussed later.
+Below is my initial implementation of the CPU. Details of the `execute` function are omitted here and will be discussed when we implement the instruction set.
 
 ```OCaml
 (* cpu.mli *)
@@ -313,41 +376,49 @@ type t = {
   ...
 }
 
+(* Initializes the CPU by passing it's dependencies *)
 let create ~bus ~registers ... = {
     bus;
     registers;
     ...
 }
 
+(* Omitted for now. *)
 let execute t inst = ...
 
+(* Fetches, decodes, and executes an instruction *)
 let run_instruction t =
   ...
   let inst = Fetch_and_decode.f t.bus ~pc:t.pc in
   execute t inst
 ```
 
-#### The problem with the initial implementation of the CPU
+### The problem with the initial implementation of the CPU
 
-The above implementation of the CPU works, but there is one problem - it is hard to test. The following diagram illustrates why.
+The above implementation of the CPU works, but there is one problem — it is hard to test. The following diagram illustrates why:
 
-![camlboy-architecture-simplified.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/675652/8d72e369-845f-88c0-b423-8a781d1be364.png)
+<div align="center">
+  <img src="/images/camlboy-architecture-simplified.png" alt="camlboy architecture simplified" title="camlboy-architecture-simplified">
+</div>
 
-Notice that the Bus has many dependencies on various modules. These dependencies make it hard to instantiate the CPU in our unit tests since we need to create the Bus and all its dependencies.
+Notice that the bus has many dependencies on various modules. These dependencies make it hard to instantiate the CPU in our unit tests. Furthermore, it is impossible to instantiate the CPU until we implement the bus and all the connected modules, which would be pretty later on in the development process.
 
-Furthermore, it is impossible to instantiate the CPU until we implement the Bus and all the connected modules, which would be pretty later on in the development process.
+To make the CPU testable, we want to abstract away the implementation of the bus from the CPU. Once we do this, we can swap the bus with a mock implementation, as illustrated below:
 
-#### Using functors to improve testability
+<div align="center">
+  <img src="/images/camlboy-architecture-mocked-bus.png" alt="camlboy architecture mocked bus" title="camlboy-architecture-mocked-bus">
+</div>
 
-To make the CPU testable, we want to abstract away the implementation of the Bus from the CPU. Once we do this, we can swap the Bus with a mock implementation, as illustrated below.
+In OCaml, you can achieve such abstraction of implementation using _**functors**_.
 
-![camlboy-architecture-mocked-bus.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/675652/d88e5e56-3c94-3d59-7f2c-46ee77408214.png)
+### Using functors to improve testability
 
-Functors can be used to "abstract away the implementation of the Bus from the CPU", as demonstrated in the code below. Notice that the CPU is now a functor that takes a module that satisfies `Word_addressable_intf.S`.
+I have reimplemented the CPU using functors like this:
 
 ```OCaml
 (* cpu.mli *)
 
+(* We can now "inject" different implementations of the Bus via this functor argument *)
 module Make (Bus : Word_addressable_intf.S) : sig
   type t
   ...
@@ -357,76 +428,84 @@ end
 ```OCaml
 (* cpu.ml *)
 
-module Make (Bus : Word*addressable_intf.S) = struct
-type t = {
-registers : Registers.t;
-bus : Bus.t;
-mutable pc : uint16; (* Program counter \_)
-...
-}
-...
+module Make (Bus : Word_addressable_intf.S) = struct
+  type t = {
+    registers  : Registers.t;
+    bus        : Bus.t;
+    mutable pc : uint16; (* Program counter *)
+    ...
+  }
+  ...
 end
 ```
 
-Thanks to this change, we can now use a mock implementation of the Bus to instantiate the CPU in our unit tests. `Mock_bus` is a simple implementation of `Word_addressable_intf.S`, which is internally just a single byte array.
+Thanks to this change, we can use a mock implementation of the bus to instantiate the CPU in our unit tests, as illustrated below:
 
 ```OCaml
 (* test_cpu.ml *)
 ...
+(* Mock_bus is a simple implementation of `Word_addressable_intf.S`
+   which is implemented using a single byte array. *)
 module Cpu = Cpu.Make(Mock_bus)
-...
-let cpu = Cpu.create ~bus:(Mock_bus.create ~size:0xFF) ~
+let cpu = Cpu.create ~bus:(Mock_bus.create ~size:0xFF) ...
 ...
 ```
 
-### Instruction set
+<!-- [Things I didn’t like about OCaml](#the-syntactical-cost-of-depending-on-abstractions) -->
 
-Next, we would like to take a closer look at the `execute` function (which was omitted in the previous `cpu.ml`) that executes a given instruction. But before that, we must first look at the Game Boy's instruction set and how to encode them in OCaml.
+## Instruction set
 
-The instruction set of Game Boy consists of 8-bit instructions and 16-bit instructions. 8-bit instructions take 8-bit registers, 8-bit values, etc., as arguments. 16-bit instructions take 16-bit registers, 16-bit values, etc., as arguments.
+Let's encode Game Boy's instruction in OCaml.
 
-For example, there are two versions of addition as shown below. `ADD8 A, 0x12` adds the `A` register and `0x12`, then stores the result in the `A` register. `ADD16 AF, 0x1234` adds the `AF` register and `0x1234`, then stores the result in the `AF` register.
+The instruction set of Game Boy consists of 8-bit instructions and 16-bit instructions. 8-bit instructions take 8-bit values (8-bit registers, 8-bit immediate values, etc.) as arguments, and 16-bit instructions take 16-bit values (16-bit registers, 16-bit immediate values, etc.) as arguments. For example, there are two versions of addition as shown below:
 
 ```assembly
 # 8-bit version
+# Adds the 8-bit `A` register and `0x12`, then stores the result in the `A` register
 ADD8 A, 0x12
 # 16-bit version
+# adds the 16-bit `AF` register and `0x1234`, then stores the result in the `AF` register
 ADD16 AF, 0x1234
 ```
 
-Now, how should we define such an instruction set in OCaml?
+Now, how should we define this instruction set in OCaml?
 
-#### Define the instruction set using variants
+### Define the instruction set using variants
 
-I tried to represent the instructions and their arguments as variants, as shown below. Type `Instruction.t` represents the instructions, and type `Instruction.arg` represents the instruction's arguments.
+As a first attempt, I represented the instructions and their arguments as variants, as shown below:
 
 ```OCaml
 (* instruction.ml *)
+
+(* Instruction arguments definied using variants *)
 type arg =
-  | Immediate8 of uint8   (*  8-bit value *)
+  | Immediate8  of uint8   (*  8-bit value *)
   | Immediate16 of uint16 (* 16-bit value *)
-  | R of Registers.r      (*  8-bit register *)
-  | RR of Registers.rr    (* 16-bit register *)
+  | R           of Registers.r      (*  8-bit register *)
+  | RR          of Registers.rr    (* 16-bit register *)
   | ...
+
+(* Instructions *)
 type t =
   | ADD8  of arg * arg (*  8-bit version of ADD *)
   | ADD16 of arg * arg (* 16-bit version of ADD *)
   | ...
 ```
 
-#### Problem with the definition using variants
+But I soon noticed that this approach does not work.
 
-With this definition of the instructions, I tried to implement the `execute` function as below.
+### Problem with the definition using variants
 
-The `execute` function takes a single instruction and executes it. For example, if given an 8-bit add instruction `Add8 (x, y)`, it fetches the value stored in the arguments `x` and `y' adds them up.
-
-The `read_arg` defined within the `execute` function fetches values stored in the given argument.
+Why does this approach not work? The problem arises when we try to "consume" the instruction set in the `execute` function, as shown below:
 
 ```OCaml
 (* cpu.ml *)
-let execte t (inst : Instruction.t) =
+
+(* Takes a single instruction and executes it. *)
+let execute t (inst : Instruction.t) =
   ...
   let read_arg = function
+    (* fetch values stored in the given argument *)
     | Immidiate8  x -> x
     | Immediate16 x -> x
     | R  r          -> Registers.read_r r
@@ -435,6 +514,7 @@ let execte t (inst : Instruction.t) =
   in
   match inst with
   | Add8 (x, y) ->
+    (* Fetches the value stored in the arguments x and y adds them. *)
     let sum = Uint8.add (read_arg x) (read_arg y) in
     ...
   | Add16 (x, y) ->
@@ -447,9 +527,9 @@ let run_instruction t =
   execute t inst
 ```
 
-While implementing the above, I noticed that this approach does not work. The above definition won't even type check.
+While implementing the above, I noticed that using variants to represent the instruction set does not work. The above definition won't even type check.
 
-To understand why I have extracted the `read_arg` function below. If you look closely, you can see that the return value of the entire function cannot be uniquely determined. This is because the return type of the match expression changes depending on which constructor it matches, as highlighted in the comments.
+To understand why I have extracted the `read_arg` function below. Notice that the return value of the entire function cannot be uniquely determined. This is because the return type of the match expression changes depending on which constructor it matches, as highlighted in the comments.
 
 ```OCaml
   (* What is the type of the return value? *)
@@ -466,39 +546,39 @@ To understand why I have extracted the `read_arg` function below. If you look cl
   in
 ```
 
-At this point, I remembered GADT, a language feature that I had studied before but never really felt comfortable with.
+At this point, I remembered _**GADT**_ (_**Generalized Algebraic Data Type**_), a language feature that I had studied before but never really felt comfortable with.
 
-#### GADTs to the rescue!
+### GADTs to the rescue
 
-Now let's define the instruction set using GADT.
+Below is the redefined instruction set that uses GADTs. Notice that the definition of the `arg` type looks different from the previous variant definition.
 
 ```OCaml
 (* instruction.ml *)
-type  arg =
+
+(* Instruction arguments definied using GADTs *)
+type _ arg =
   | Immediate8  : uint8        -> uint8  arg
   | Immediate16 : uint16       -> uint16 arg
   | R           : Registers.r  -> uint8  arg
   | RR          : Registers.rr -> uint16 arg
   | ...
+
+(* Instructions *)
 type t =
   | ADD8  of arg * arg (*  8-bit version of ADD *)
   | ADD16 of arg * arg (* 16-bit version of ADD *)
   | ...
 ```
 
-To understand the meaning of this definition, let's focus on the third line of the constructor.
+To understand the meaning of this definition, let's focus on the third line of the `arg` type:
 
 ```OCaml
   | R : Registers.r -> uint8  arg
 ```
 
-Let's first zoom in into the argument type of the constructor, namely the `Registers.r` in `Registers.r -> uint8 arg`. This has the same functionality as the `of Registers.r` in the variant definition below, in the sense that it changes the **type of the value you _get_ in the pattern match based on the constructor**.
+The argument type of the constructor (`Registers.r` in `Registers.r -> uint8 arg`) has the same functionality as the `of Registers.r` in the variant definition. It changes the **type of the value you _get_ in the pattern match based on the constructor**.
 
-```OCaml
-| RR of Registers.r
-```
-
-Take a look at the below match statement. Notice that the type of value we **get** in the match statement (type of `r` and `rr`) is different depending on the constructor we match. This is possible because the **argument** type of the constructor (`of t` in the variant definition and 't -> ...` in the GADT definition) are different.
+In the below match statement, notice that the type of value we get in the match statement (type of `r` and `rr`) is different depending on the constructor, we match. This is possible because the argument type of the constructor is different.
 
 ```OCaml
 let read_arg = function
@@ -508,11 +588,9 @@ let read_arg = function
   ...
 ```
 
-Now let's zoom in into the return type of the constructor, namely the `uint8 arg` in `Registers.r -> uint8 arg`. What does this represent? There seems to be nothing corresponding to this in the variant definition.
+Then what does the return type of the constructor (`uint8 arg` in `Registers.r -> uint8 arg`) represent? There seems to be nothing corresponding to this in the variant definition. The answer is: it changes **type of the value you _return_ in the pattern match based on the constructor**.
 
-In conclusion, the return value is used to change the **type of the value you _return_ in the pattern match based on the constructor**.
-
-Take a look at the below match statement. Notice that the type of value we **return** in the match statement (type of `Registers.read_r r` and `Registers.read_rr rr`) is different depending on the constructor we match. This is possible because the **return** type of the constructor (`.. -> t` in the GADT definition) is different.
+Take a look at the below match statement. Notice that the type of value we return in the match statement is different depending on the constructor we match. This is possible because the return type of the constructor is different.
 
 ```OCaml
 let read_arg = function
@@ -522,18 +600,16 @@ let read_arg = function
   ...
 ```
 
-So, in summary, variants can only change the type of the value we get in the match statement, while GATDs can also change the type of the value we return in the match statement[^7].
+In summary, **variants can parametrize the type of values we get in the match statement**, while **GATDs can also parameterize the type of the value we return in the match statement**. In this sense, GADTs are more "general" than variants, which I guess is where the name "Generalized" Algebraic Data Type comes from.
 
-[^7]: In this sense, GADTs are more "general" than variants. I think that is why it is named "Generalized" Algebraic Data Type, but I have not checked.
-
-Using the new `Instruction.arg` defined with GADTs, we can write `execute` as below. The type 'a Instruction.arg -> a' of `read_arg` indicates that the return type changes based on the return type of the given constructor.
+Using the newly defined `Instruction.arg`, which uses GADTs, we can write `execute` as below. The type `'a Instruction.arg -> 'a` of `read_arg` indicates that the return type changes based on the type of the given constructor.
 
 ```OCaml
 let execute t (inst : Instruction.t) =
   ...
   let read_arg : type a. a Instruction.arg -> a = fun arg ->
     match arg with
-    | Immediate8 n -> n
+    | Immediate8  n -> n
     | Immediate16 n -> n
     | ...
   in
@@ -546,46 +622,140 @@ let execute t (inst : Instruction.t) =
     ...
 ```
 
+For refrence, here is the full instruction set defined using GADTs (click to expand):
+
+```OCaml
+  | RLC   of uint8 arg
+  | RL    of uint8 arg
+  | RRC   of uint8 arg
+  | RR    of uint8 arg
+  | SLA   of uint8 arg
+  | SRA   of uint8 arg
+  | SRL   of uint8 arg
+  | BIT   of int * uint8 arg
+  | SET   of int * uint8 arg
+  | RES   of int * uint8 arg
+  | PUSH  of Registers.rr
+  | POP   of Registers.rr
+  | JP    of condition * uint16 arg
+  | JR    of condition * int8
+  | CALL  of condition * uint16
+  | RST   of uint16
+  | RET   of condition
+  | RETI
+```
+
 ## The Cartridges
 
-You might think that Game Boy cartridges are just a ROM (read-only memory) that stores game data/code, but this is not the case. Many Game Boy cartridges contain hardware components to enhance the Game Boy functionality. For example, while ROM_ONLY type cartridges (such as Tetris) only include the ROM that stores the game data/code, MBC3 type cartridges (such as Pokémon Red) contain independent RAM and timers in addition to the ROM.
+Let's look at the implementation of the cartridges, highlighted in the red box below.
 
-Since each cartridge type has separate functionality, the emulator will implement each cartridge type as separate modules. Therefore, we need a mechanism to select a module according to the cartridge type at runtime.
+<div align="center">
+  <img src="/images/camlboy-architecture-cartridge.png" alt="camlboy architecture cartridge" title="camlboy-architecture-cartridge">
+</div>
 
-First-class modules are helpful for this kind of "runtime module selection". Using it, you can write `Detect_cartridge.f` that detects the cartridge type based on the ROM data and returns a first-class module that implements that cartridge type. (Just the signature, implementation is omitted.)
+You might think that Game Boy cartridges are just a ROM (read-only memory) that stores game data/code, but this is not the case. Many Game Boy cartridges contain hardware components to enhance the Game Boy's limited functionality. For example, ROM_ONLY type cartridges (such as Tetris) only include the ROM that stores the game data/code, and MBC3 type cartridges (such as Pokémon Red) contain independent RAM and timers in addition to the ROM.
+
+Since each cartridge type have separate functionality, we will implement each cartridge type as individual modules. Therefore, we need a mechanism to select a module according to the cartridge type at runtime.
+
+**_First-class modules_** are helpful for this kind of "runtime module selection". You can write `Detect_cartridge.f` that returns a first-class module based on the cartridge type, as shown below. We will omit the implementation in this article.
 
 ```OCaml
 (* detect_cartridge.mli *)
 val f : rom_bytes:Bigstringaf.t -> (module Cartridge_intf.S)
 ```
 
+## Integration tests
+
+I used test ROMs and `ppx_expect` to catch regressions and to enable _exploratory programming_.
+
+### What are test ROMs
+
+Test ROMs are programs that test certain functionality of the emulator. For example, there are test ROMs that
+
+- Test if the basic arithmetic instructions are working as expected.
+- Test if the MBC1 cartridge type is adequately supported.
+
+Such test ROMs are extremely helpful when developing emulators since, unlike game ROMs, they
+
+- Indicate which aspect of the emulator is failing.
+- Runs even if some core functionality of the emulator is missing.
+
+Test ROMs typically output the test results to the display[^77]. For example, [mooneye test ROMs](https://github.com/Gekkio/mooneye-test-suite) results look like below. The text displayed in the failure case is the register dump and assertion failure information.
+
+<div>
+  <img src="/images/test_rom_failed.png" alt="test rom failed" title="test-rom-failed">
+  <img src="/images/test_rom_success.png" alt="test rom success" title="test-rom-success">
+</div>
+
+[^77]: Some test ROMs, such as [blargg test roms](https://github.com/retrio/gb-test-roms), output the test results to the serial port as ASCII characters. This enables testing the emulator even before implementing the GPU.
+
+### Setting up the tests
+
+Below is an example integration test implemented using a test ROM and [`ppx_expect`](https://github.com/janestreet/ppx_expect). Here is what is happening:
+
+1. `M.run_test_rom_and_print_framebuffer` runs the given ROM and prints the final state of the screen in ascii characters.
+1. The printed string is matched with the `...` in `[%expect{|...|}]`.
+
+Details about `ppx_expect` can be found in [this article](https://blog.janestreet.com/testing-with-expectations).
+
+```OCaml
+let%expect_test "bits_mode.gb" =
+  M.run_test_rom_and_print_framebuffer "mbc1/bits_mode.gb";
+
+  [%expect{|
+    008:-#######-----------------------------------###---#---#----------------------------------------------------------------------------------------------------------
+    009:----#-----####-----###-----#--------------#---#--#--#-----------------------------------------------------------------------------------------------------------
+    010:----#----#----#---#-------####------------#---#--#-#------------------------------------------------------------------------------------------------------------
+    011:----#----######----##------#--------------#---#--###------------------------------------------------------------------------------------------------------------
+    012:----#----#-----------#-----#--------------#---#--#--#-----------------------------------------------------------------------------------------------------------
+    013:----#-----####----###------##--------------###---#---#---------------------------------------------------------------------------------------------------------- |}]
+```
+
+These integration tests gave me the confidence to make large code changes as the test suit would catch regressions.
+
+### Exploratory programming
+
+Furthermore, these integration tests enabled me to implement the emulator in a [_exploratory programming_](https://blog.janestreet.com/repeatable-exploratory-programming/) style. Whenever I would implement new functionality, I would
+
+1. Find a test ROM that checks the functionality.
+1. Set up `ppx_expect` tests that run the test ROM.
+1. Run the tests and commit the failed output.
+1. Implement the functionality.
+1. Check if the test changed to the "Test OK" state.
+
 ## Compiling to JavaScript
 
-Compiling to JavaScript was surprisingly easy thanks to `js_of_ocaml`. It was so easy that I was able to get the emulator working in the browser with a [single commit](https://github.com/linoscope/CAMLBOY/commit/ac04c5d1ca39514cf7f34d19b2c5e702cc3d28c1).
+Compiling to JavaScript was surprisingly easy thanks to [js_of_ocaml](https://github.com/ocsigen/js_of_ocaml). I was able to get the emulator working in the browser with just a [single commit](https://github.com/linoscope/CAMLBOY/commit/ac04c5d1ca39514cf7f34d19b2c5e702cc3d28c1).
 
-For interacting with the browser API I used a library called [Brr](https://github.com/dbuenzli/brr). The great thing about Brr is that it expresses JS objects using OCaml's module system. On the other hand, `js_of_ocaml` 's built-in browser API that maps JS objects to OCaml objects hence requires some knowledge about the "O" in OCaml.
+I used a library called [Brr](https://github.com/dbuenzli/brr) when implementing the browser UI. The great thing about Brr is that it maps JS objects to OCaml modules, unlike `js_of_ocaml` 's built-in browser API that maps JS objects to OCaml objects, requiring some knowledge about the "O" in OCaml.
 
-## Optimize, optimize, optimize!
+## Optimization
 
-Although I was able to get it working in my browser, I faced the problem that it was very slow (like ~20 FPS). Below is a gif of how it looked like at this point.
+Although I was able to get it working in my browser, it had one problem — it was unplayably slow. Below how it looked like in the PC browser at this point, running at around 20 FPS. The actual Game Boy runs at 60 FPS so we need to improve the performance by a factor of three.
 
-![before-optimize.gif](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/675652/dbd90497-4c32-875a-9a27-f56e1ccc8b02.gif)
+<div>
+  <img src="/images/before-optimize.gif" alt="before optimize" title="before-optimize">
+</div>
 
 Now started the journey of optimization.
 
 ### Finding bottlenecks with a profiler
 
-The first thing I did was use Chrome's profiler[^8] and find out the bottlenecks. Here are the results.
+The first thing I did was use Chrome's profiler[^8] and find out the bottlenecks. Here are the results:
 
-[^8]: Being able to use Chrome's profiler was a nice side effect of compiling to JS. Also, It was nice that I could see the file names and line numbers in the OCaml code thanks to the source map generated by js_of_ocaml.
+[^8]: Being able to use Chrome's profiler was a nice side effect of compiling to JS.
 
-![profile-first.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/675652/c8e7536f-3f84-eab7-5fd3-0156e8332cdc.png)
+<div>
+  <img src="/images/profile-result.png" alt="profile result" title="profile-result"> 
+</div>
 
-The above show that the GPU consumes ~73% of the time, with `tile_data.ml`, `oam_table.ml`, and `tile_map` consuming 34%, 18%, and 8% of the time, respectively. In a similar fashion I found that `timer.ml` and some `Bigstringaf` functions were consuming a lot of time.
+The above show that the GPU consumes ~73% of the time, with `tile_data.ml`, `oam_table.ml`, and `tile_map` consuming 34%, 18%, and 8% of the time, respectively.
+
+Similarly, I found that `timer.ml` and some `Bigstringaf` functions were consuming a lot of time.
 
 ### Removing the bottlenecks
 
-Now that I knew where the bottlenecks were, I worked on removing them. Since these changes touch parts of the emulator that are not covered in this article, I will only list the part I optimized and their results.
+Now that I knew where the bottlenecks were, I worked on removing them. Since this article does not cover the parts that these changes touch, I will only list where I optimized and their results.
 
 - Optimize `oam_table.ml` ([commit](https://github.com/linoscope/CAMLBOY/commit/47989b77451873202268c955bc3b650420e648e8)):
   - 14fps -> 24fps
@@ -600,116 +770,135 @@ Now that I knew where the bottlenecks were, I worked on removing them. Since the
 
 ### Disabling inlining
 
-At this point the emulator was running at 60FPS on my PC browser, but only at 20~40FPS on my phone. As I wondered what to do, I realized that the JS output from the release build (`dune build --profile release`) was slower than the JS output from the dev build (just `dune build`). With the help from people at discuss.ocaml.org[^9], we found that js_of_ocaml's inlining was slowing down the JS performance[^10]. After disabling inlining, I achieved 100FPS on my PC and 60FPS on my phone.
+At this point, the emulator was running at 60 FPS on my PC browser, but only at 20~40 FPS on my phone. As I wondered what to do, I realized that the JS output from the release build was slower than the JS output from the dev build. With the [help](https://discuss.ocaml.org/t/js-of-ocaml-output-performs-considerably-worse-when-built-with-profile-release-flag/8862) from people at discuss.ocaml.org, we found that js_of_ocaml's inlining was slowing down the JS performance (probably because the emulator contains some long functions, and the JS engine doesn't JIT compile when a function is too long).
 
-Below is the gif of the emulator running in 100FPS in the PC browser.
+After disabling inlining, I achieved 100 FPS on my PC and 60 FPS on my phone. Below is the gif of the emulator running in 100 FPS in the PC browser.
 
-[^9]: https://discuss.ocaml.org/t/js-of-ocaml-output-performs-considerably-worse-when-built-with-profile-release-flag/8862
-[^10]: Probably because the JS engine doesn't JIT when the function is too long.
+<div>
+  <img src="/images/after-optimize.gif" alt="after optimize" title="after-optimize"> 
+</div>
 
-![after-optimize-2.gif](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/675652/18986757-0719-61f2-a761-22a43b6f8f46.gif)
+As a side note, optimizing the JS performance also improved the native performance. Below is the emulator running in ~1000 FPS in native.
 
-Also, optimizing the JS performance also improved the native performance a lot. Below is the emulator running in ~1000FPS in native.
-
-![benchmark-nothrottle.gif](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/675652/cae0f4e2-7d36-ee8d-1c37-ee311c8cd778.gif)
+<div>
+  <img src="/images/after-optimize-native.gif" alt="after optimize native" title="after-optimize-native"> 
+</div>
 
 ## Some benchmarks
 
-I implemented a "headless benchmarking mode" to run the emulator without UI and measured the FPS while switching the OCaml compiler backend. The results were as follows[^11].
+I implemented a _headless benchmarking mode_ to run the emulator without UI. I measured the FPS in various OCaml compiler backends, and the result was as follows:
 
-![benchmark-result.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/675652/4fc0c620-3c45-fb79-9016-53f425974f1f.png)
+<div>
+  <img src="/images/benchmark-result.png" alt="benchmark result" title="benchmark-result"> 
+</div>
 
-[^11]: It should be noted that you cannot use this benchmark result for comparison with other Game Boy emulators. This is because the performance of an emulator depends significantly on how accurate it is and how much functionality it has. For example, CALMBOY does not implement APU (Audio Processing Unit), so there is no point in comparing it with emulators that implement APU.
+Note that this benchmark is for comparing OCaml backends and can not be used to compare the FPS with other Game Boy emulators. This is because the performance of an emulator depends significantly on how accurate it is and how much functionality it has. For example, CALMBOY does not implement the APU (Audio Processing Unit), so there is no point comparing its FPS with emulators that have APU support.
 
 # Final remarks
 
 ## Thoughts on emulator development
 
-I found emulator development to be similar to competitive programming. They both proceed through an iteration of the following steps.
+I found emulator development to be similar to competitive programming. They both proceed through an iteration of the following steps:
 
-- Specifications are given.
-  - The problem statement in competitive programming and the wiki pages/manuals in emulator development.
-- Implementation is done according to the specification.
-- Easily check whether the implementation satisfy the specification.
-  - Submitting to an online judge in competitive programming and running test ROMs in emulator development
+- Read the specification. The problem statement in competitive programming and the manuals/wiki pages in emulator development.
+- Implement according to the specification.
+- Check whether the implementation satisfies the specification. Submitting to an online judge in competitive programming and running test ROMs in emulator development.
 
-In the past, I have recommended competitive programming to people (like me) who want to program but have a hard time thinking of what to implement. In the future, I would also recommend emulator development to such people.
+In the past, I have recommended competitive programming to people (like me) who want to code but have a hard time thinking of what to implement. In the future, I would also recommend emulator development to such people.
 
-## Thoughts on OCaml
-
-### Things I liked about OCaml
+## Things I liked about OCaml
 
 #### The ecosystem
 
-The ecosystem of OCaml is evolving at a rapid pace. Thanks to `dune`, we now have the "just throw the files in the directory, and the build system will do the rest" experience, which is becoming the norm in modern programming languages. Also, introducing autocomplete/code navigation/autoformat to your editor is super easy thanks to software such as `merlin` and `OCamlformat`.
+The ecosystem of OCaml has improved a lot since the last time I touched OCaml (around six years ago). To list a few examples
 
-If you tried OCaml a few years ago but left because the ecosystem, you should definitely give it another shot.
+- Thanks to [dune](https://dune.readthedocs.io/en/stable/), we now have the "just throw the files in the directory, and the build system will do the rest" experience, which is becoming the norm in modern programming languages.
+- Thanks to software such as [Merlin](https://github.com/ocaml/merlin) and [OCamlformat](https://github.com/ocaml-ppx/ocamlformat), introducing autocomplete, code navigation, and autoformat is mostly effortless.
+- Thanks to [setup-ocaml](https://github.com/ocaml/setup-ocaml), we can set up Github actions builds and tests your code by just commiting a single file.
 
-#### Doesn't have to be functional to be useful
+If you tried OCaml a few years ago but left because of the ecosystem, you should give it another shot.
 
-A functional language is often defined as "a language that supports a programming style that uses as few side effects as possible", but I have always felt uncomfortable with this "side effects" part. I don't mean to say that the definition is wrong; I just personally never thought that the existence of side effects itself was a huge problem. I understand that an exposed mutable state is bad, but isn't it okay if hidden behind an abstraction?
+#### Doesn't have to be "functional" to be useful
 
-In fact, the CAMLBOY implementation has mutable states everywhere for performance reasons. Many modules have functions with the type `t -> ... -> unit`, which indicates modification of some mutable state. And despite this non-"functional" implementation, I never felt that I was missing out on the benefits of OCaml.
+A functional language is often defined as "a language that supports a programming style that uses as few side effects as possible", but I have always felt uncomfortable with this "side effects" part. I am not saying that the definition is wrong; I just never thought side effects themselves were a huge problem. An exposed mutable state is bad, but isn't it OK if hidden behind an abstraction?
 
-I noticed that it's not that I like "functional" languages; I like statically typed languages with variants, pattern matching, module systems, and nice type inference.
+In fact, the implementation of CAMLBOY has mutable states everywhere for performance reasons. Many modules have functions with the type `t -> ... -> unit`, which indicates modification of some mutable state. And despite this non-"functional" implementation, I never felt that I was missing out on the benefits of OCaml.
 
-### Things I didn't like about OCaml
+Mabye it's not that I like "functional" languages; I like statically typed languages with variants, pattern matching, a module system, and nice type inference.
 
-I sometimes feel that OCaml has a high cost of "depending on abstractions."
+## Things I didn't like about OCaml
 
-For example, suppose we have modules `A`, `B`, and `C` with the dependency `A` -> `B` -> `C` (`A` references `B` which references `C`), as shown below.
+#### The ecosystem
+
+Although the ecosystem has improved a lot, some things still feel complex and/or poorly documented. For example, I had trouble resolving dependencies in a reproducible way as there seemed to be no clear instructions in the [official opam document](https://opam.ocaml.org/doc/Usage.html). I ended up reading the source of [`setup-ocaml`](https://github.com/ocaml/setup-ocaml) to find out the required commands, and the commands I found felt a little complex (we need to "publish" the package locally, then install the locally published package). It would be super nice if there was a single command that resolves the dependencies and builds the code in a reproducible way.
+
+#### The syntactical cost of depending on abstractions
+
+I sometimes feel that OCaml has a high cost of "depending on abstractions". Let me illustrate what I mean with an example.
+
+Suppose we have modules `A`, `B`, and `C` with the dependency `A` -> `B` -> `C` (`A` references `B` which references `C`), as shown below.
 
 ```OCaml
 module A = struct .. B.foo () .. end
-module B = struct .. C.foo () .. end
+module B = struct .. C.bar () .. end
 module C = struct .. end
 ```
 
-Suppose you want to break the hard-coded dependency between `B` and `C`. In other words, you want to make `B` depend on the `C` 's interface and not `C` 's concrete implementation. You could do this with the following steps.
+Say you want to break the hard-coded dependency between `B` and `C`. In other words, you want to make `B` depend on the `C` 's interface and not `C` 's concrete implementation. You will want to do this, for example, if you want to swap `C` with a mock implementation in the unit test of `B`. You can do this with the following steps:
 
-- Extract the interface of `C` into a signature called `C_intf`
-- Define `B` as a functor that takes `C_int` as an argument
+1. Extract the interface of `C` into a signature called `C_intf`
+1. Define `B` as a functor that takes `C_int` as an argument
 
-The result of these changes should look like the following.
+The result of these changes should look like the following. Notice that `B` is now a functor that takes a module that satisfies `C`'s interface `C_intf`.
 
 ```OCaml
 module A              = struct .. B.foo () .. end
-module B (C : C_intf) = struct .. C.foo () .. end
+module B (C : C_intf) = struct .. C.bar () .. end
 module C              = struct .. end
 ```
 
-But this won't compile because `B`, which is referenced in `A`, is now a functor and not a module. Therefore, we need to repeat the above steps for `A` -> `B` like this:
+But this won't compile because `B` referenced in `A` is now a functor and not a module. Therefore, we need to repeat the above steps and abstract away `B` from `A` like this:
 
 ```OCaml
 module A (B : B_intf)          = struct .. B.foo () .. end
-module B (C : C_intf) : B_intf = struct .. C.foo () .. end
+module B (C : C_intf) : B_intf = struct .. C.bar () .. end
 module C                       = struct .. end
 ```
 
-In summary, when we have a dependency graph like `A` -> `B` -> `C`, decoupling `B` -> `C` forces us to decouple `A` -> `B` too.[^12]
+Let's see what happened here in detail. Any module have two types of dependencies:
 
-[^12]: Note that this won't happen in the OOP paradigm. Changing class `B` 's constructor parameter to take an interface `C_intf` (instead of a concrete class `C`) will not change the type of class `B` itself. But of course, this comes with the cost of dynamic dispatch.
+- (a) How the module depends on other modules
 
-In fact, I ran into this problem when I tried to make the cartridge implementation switchable at runtime (I had the dependency graph of `Camlboy` -> `Bus` -> `Cartridge` and wanted just to decouple the `Bus` -> `Cartridge` part).
+- (b) How the module is depended on by other modules
 
-## Recommended Materials
+The motivation for converting a module into a functor is to change (a), but converting a module to a functor also changes (b). In other words, **converting a module to a functor not only changes how the module _depends on_ other modules, but it also changes how it is _dependend on by_ other modules**.
 
-### About OCaml
+This will be a bigger problem if many modules depend on `B` or if we have a deeper dependency graph.
+
+Note that this won't happen in the OOP paradigm. Changing class `B` 's constructor to take an interface `C_intf` instead of a concrete class `C` will not change the type of class `B` itself.[^98]
+
+[^98]: But OOP comes with the cost of [dynamic dispatch](https://en.wikipedia.org/wiki/Dynamic_dispatch), which may or may not be a problem depending on your use case. Also, although OCaml supports OOP, using them might limit the readers of your code since many people (including myself) are unfamiliar with the OOP aspect of OCaml.
+
+While working on CAMLBOY, I ran into this problem when I tried to make the cartridge implementation switchable at runtime (I had the dependency graph of `Camlboy` -> `Bus` -> `Cartridge` and wanted just to decouple the `Bus` -> `Cartridge` part).
+
+# Recommended Materials
+
+## About OCaml
 
 - [Learn OCaml Workshop](https://github.com/janestreet/learn-ocaml-workshop)
-  - OCaml materials used (used to be used?) within Jane Street. It consists of implementation with holes and a test that requires filling the holes to pass, so you can learn the basics of OCaml efficiently in a hands-on way. The second half of the book deals with pretty complex programs such as Snake and Lumines which helps you learn how to separate modules, how to use the build system, etc.
+  - I highly recommend this workshop material used (used to be used?) within Jane Street. It consists of OCaml code with holes and tests that require filling the holes to pass, so you can learn the basics of OCaml efficiently in a hands-on way. The second half of the book deals with pretty complex programs such as Snake and Lumines, so you can learn how to separate modules effectively, how you can use the build system, etc.
 - [Real World OCaml](https://dev.realworldocaml.org/)
-  - I recommend this book if you know the basic syntax of OCaml or have experience in programming other functional languages. It introduces the knowledge needed to write "real world" programs in OCaml with practical examples.
+  - I recommend this book if you know the basic syntax of OCaml or have experience in other functional languages. It introduces the knowledge needed to write "real world" programs in OCaml with practical examples.
 
-### About Game Boy
+## About Game Boy
 
 - [The Ultimate Game Boy Talk](https://www.youtube.com/watch?v=HyzD8pNlpwI)
   - This is a great video that explains the whole Game Boy architecture in just one hour. I've watched it countless times during the course of development.
 - [gbops](https://izik1.github.io/gbops/)
   - A table of Game Boy's instruction set. Information necessary for decoding instructions is summarized here.
 - [Game Boy CPU Manual](http://marc.rawer.de/Gameboy/Docs/GBCPUman.pdf)
-  - CPU manual. I used this manual to implement the instructions. But note that some parts (especially around the register flags) are incorrect.
+  - CPU manual. I used this manual to implement the instructions. Note that some parts (especially around the register flags) are incorrect.
 - [Pandocs](https://gbdev.io/pandocs/)
   - A wiki with details on how each hardware module should work. I constantly referenced this wiki while implementing GPU, Timer, etc.
 - [Imran Nazar's blog](https://imrannazar.com/GameBoy-Emulation-in-JavaScript)
-  - A tutorial on how to implement a Game Boy emulator in Javascript. It helps get a rough understanding of what to implement.
+  - A tutorial on how to implement a Game Boy emulator in JavaScript. I read it to get a rough understanding of what to implement.
