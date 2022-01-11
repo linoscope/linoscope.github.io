@@ -839,7 +839,7 @@ As a side note, optimizing the JS performance also improved the native performan
 
 I implemented a _headless benchmarking mode_ to run the emulator without UI. I measured the FPS in various OCaml compiler backends, and the result was as follows:[^9]
 
-[^9]: Note that we can not use this benchmark to compare the FPS with other Game Boy emulators. This is because the performance of an emulator depends significantly on how accurate it is and how much functionality it has. For example, CALMBOY does not implement the APU (Audio Processing Unit), so there is no point comparing its FPS with emulators that have APU support.
+[^9]: Note that we can not use this benchmark to compare the FPS with other Game Boy emulators. This is because the performance of an emulator depends significantly on how accurate it is and how much functionality it has. For example, CALMBOY does not implement the APU (Audio Processing Unit), so there is no point in comparing its FPS with emulators with APU support.
 
 <div>
   <img src="/images/benchmark-result.png" alt="benchmark result" title="benchmark-result"> 
