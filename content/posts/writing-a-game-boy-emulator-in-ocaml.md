@@ -171,12 +171,9 @@ With OCaml, you can
 1. Write a signature (`module type S = sig ... end`).
 1. Include it (`include S with type t := t `).
 
-Hence to define a module that reads/writes 8-bit data, we can
+Following these steps, we define the signature `Addressable_intf.S` as below[^7].
 
-1.  Write a signature `Addressable_intf.S` with 8-bit read/write functions.
-1.  Include it in RAM, GPU, etc.
-
-Following these steps, we define the signature `Addressable_intf.S` as below. Note that the `uint8` and `uint16` in the code are not OCaml built-in types but are types from a custom unsinged int module (`units.mli`, `units.ml`).
+[^7]: The `uint8` and `uint16` in the code are not OCaml built-in types but are types from a custom unsinged int module (`units.mli`, `units.ml`).
 
 ```OCaml
 (* addressable_intf.mli *)
@@ -191,7 +188,7 @@ module type S = sig
 end
 ```
 
-Then we would include `Addressable_intf.S` in the interface files of modules that provide 8-bit reads/writes. For example, the RAM module's interface file `ram.mli` looks like this:
+Then we include `Addressable_intf.S` in the interface files of modules that provide 8-bit reads/writes. For example, the RAM module's interface file `ram.mli` looks like this:
 
 ```OCaml
 (* ram.mli *)
@@ -228,7 +225,7 @@ Next, let's look at the interface for reading/writing 16-bit data, which is used
   <img src="/images/camlboy-architecture-word-addressable.png" alt="camlboy architecture word addressable" title="camlboy-architecture-word-addressable">
 </div>
 
-Between the CPU and the bus, in addition to 8-bit data, 16-bit data can also be read/written. In this case, it would be nice if we could somehow "extend" the interface for 8-bit data read/write (`Addressable_intf.S`) with 16-bit read/write functions.
+Between the CPU and the bus, in addition to 8-bit data, 16-bit data can also be read/written. To express this, it would be nice if we could somehow "extend" the interface for 8-bit data read/write (`Addressable_intf.S`) with 16-bit read/write functions.
 
 In OOP, you would
 
@@ -457,7 +454,12 @@ let cpu = Cpu.create ~bus:(Mock_bus.create ~size:0xFF) ...
 
 Let's encode Game Boy's instruction in OCaml.
 
-The instruction set of Game Boy consists of 8-bit instructions and 16-bit instructions. 8-bit instructions take 8-bit values (8-bit registers, 8-bit immediate values, etc.) as arguments, and 16-bit instructions take 16-bit values (16-bit registers, 16-bit immediate values, etc.) as arguments. For example, there are two versions of addition as shown below:
+The instruction set of Game Boy consists of
+
+- _8-bit instructions_: takes 8-bit values (8-bit registers, 8-bit immediate values, etc.) as arguments.
+- _16-bit instructions_: takes 16-bit values (16-bit registers, 16-bit immediate values, etc.) as arguments.
+
+For example, there are two versions of addition as shown below:
 
 ```assembly
 # 8-bit version
@@ -468,7 +470,7 @@ ADD8 A, 0x12
 ADD16 AF, 0x1234
 ```
 
-Now, how should we define this instruction set in OCaml?
+Now, how should we define such instruction set in OCaml?
 
 ### Define the instruction set using variants
 
@@ -527,9 +529,7 @@ let run_instruction t =
   execute t inst
 ```
 
-While implementing the above, I noticed that using variants to represent the instruction set does not work. The above definition won't even type check.
-
-To understand why I have extracted the `read_arg` function below. Notice that the return value of the entire function cannot be uniquely determined. This is because the return type of the match expression changes depending on which constructor it matches, as highlighted in the comments.
+To understand the problem, I have extracted the `read_arg` function below. Notice that the return value of the entire function cannot be uniquely determined. This is because the return type of the match expression changes depending on which constructor it matches, as highlighted in the comments.
 
 ```OCaml
   (* What is the type of the return value? *)
@@ -625,6 +625,59 @@ let execute t (inst : Instruction.t) =
 For refrence, here is the full instruction set defined using GADTs (click to expand):
 
 ```OCaml
+type _ arg =
+  | Immediate8  : uint8        -> uint8  arg
+  | Immediate16 : uint16       -> uint16 arg
+  | Direct8     : uint16       -> uint8  arg
+  | Direct16    : uint16       -> uint16 arg
+  | R           : Registers.r  -> uint8  arg
+  | RR          : Registers.rr -> uint16 arg
+  | RR_indirect : Registers.rr -> uint8  arg
+  | FF00_offset : uint8        -> uint8  arg
+  | FF00_C      : uint8 arg
+  | HL_inc      : uint8 arg
+  | HL_dec      : uint8 arg
+  | SP          : uint16 arg
+  | SP_offset   : int8         -> uint16 arg
+
+type condition =
+  | None
+  | NZ
+  | Z
+  | NC
+  | C
+
+type t =
+  | LD8   of uint8 arg * uint8 arg
+  | LD16  of uint16 arg * uint16 arg
+  | ADD8  of uint8 arg * uint8 arg
+  | ADD16 of uint16 arg * uint16 arg
+  | ADDSP of int8
+  | ADC   of uint8 arg * uint8 arg
+  | SUB   of uint8 arg * uint8 arg
+  | SBC   of uint8 arg * uint8 arg
+  | AND   of uint8 arg * uint8 arg
+  | OR    of uint8 arg * uint8 arg
+  | XOR   of uint8 arg * uint8 arg
+  | CP    of uint8 arg * uint8 arg
+  | INC   of uint8 arg
+  | INC16 of uint16 arg
+  | DEC   of uint8 arg
+  | DEC16 of uint16 arg
+  | SWAP  of uint8 arg
+  | DAA
+  | CPL
+  | CCF
+  | SCF
+  | NOP
+  | HALT
+  | STOP
+  | DI
+  | EI
+  | RLCA
+  | RLA
+  | RRCA
+  | RRA
   | RLC   of uint8 arg
   | RL    of uint8 arg
   | RRC   of uint8 arg
@@ -653,7 +706,7 @@ Let's look at the implementation of the cartridges, highlighted in the red box b
   <img src="/images/camlboy-architecture-cartridge.png" alt="camlboy architecture cartridge" title="camlboy-architecture-cartridge">
 </div>
 
-You might think that Game Boy cartridges are just a ROM (read-only memory) that stores game data/code, but this is not the case. Many Game Boy cartridges contain hardware components to enhance the Game Boy's limited functionality. For example, ROM_ONLY type cartridges (such as Tetris) only include the ROM that stores the game data/code, and MBC3 type cartridges (such as Pokémon Red) contain independent RAM and timers in addition to the ROM.
+You might think that Game Boy cartridges are just a ROM (read-only memory) that stores game data/code, but this is not the case. Many Game Boy cartridges contain hardware components to enhance the Game Boy's limited functionality. For example, while ROM_ONLY type cartridges (such as Tetris) only include the ROM that stores the game data/code, MBC3 type cartridges (such as Pokémon Red) contain independent RAM and timers in addition to the ROM.
 
 Since each cartridge type have separate functionality, we will implement each cartridge type as individual modules. Therefore, we need a mechanism to select a module according to the cartridge type at runtime.
 
@@ -786,13 +839,13 @@ As a side note, optimizing the JS performance also improved the native performan
 
 ## Some benchmarks
 
-I implemented a _headless benchmarking mode_ to run the emulator without UI. I measured the FPS in various OCaml compiler backends, and the result was as follows:
+I implemented a _headless benchmarking mode_ to run the emulator without UI. I measured the FPS in various OCaml compiler backends, and the result was as follows:[^9]
+
+[^9]: Note that this benchmark is for comparing OCaml backends and can not be used to compare the FPS with other Game Boy emulators. This is because the performance of an emulator depends significantly on how accurate it is and how much functionality it has. For example, CALMBOY does not implement the APU (Audio Processing Unit), so there is no point comparing its FPS with emulators that have APU support.
 
 <div>
   <img src="/images/benchmark-result.png" alt="benchmark result" title="benchmark-result"> 
 </div>
-
-Note that this benchmark is for comparing OCaml backends and can not be used to compare the FPS with other Game Boy emulators. This is because the performance of an emulator depends significantly on how accurate it is and how much functionality it has. For example, CALMBOY does not implement the APU (Audio Processing Unit), so there is no point comparing its FPS with emulators that have APU support.
 
 # Final remarks
 
@@ -834,7 +887,7 @@ Although the ecosystem has improved a lot, some things still feel complex and/or
 
 #### The syntactical cost of depending on abstractions
 
-I sometimes feel that OCaml has a high cost of "depending on abstractions". Let me illustrate what I mean with an example.
+OCaml has a high cost of "depending on abstractions". Let me illustrate what I mean with an example.
 
 Suppose we have modules `A`, `B`, and `C` with the dependency `A` -> `B` -> `C` (`A` references `B` which references `C`), as shown below.
 
