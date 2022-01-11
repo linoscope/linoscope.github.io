@@ -7,7 +7,7 @@ For the past few months, I have been working on a project called _CAMLBOY_, a Ga
 
 **[Demo Page](https://linoscope.github.io/CAMLBOY/)**
 
-I included several homebrew ROMs in the demo so please try them out (I recommend _Bouncing ball_ and _Rocket Man Demo_). The emulator runs at 60 FPS in recent smartphones so you can also play with it in your mobile browser.
+I included several homebrew ROMs in the demo, so please try them out (I recommend _Bouncing ball_ and _Rocket Man Demo_). You can also play with it in your mobile browser as the emulator runs at 60 FPS on recent smartphones.
 
 ## Repository
 
@@ -37,10 +37,10 @@ Have you ever felt like the following when learning a new programming language?
 - You can write simple program snippets but **you don't know how to write medium/large scale code[^1]**.
 - You have studied **advanced language features[^2]** and have a rough understanding of how they work, but **you don't know how to use them in practice**.
 
-[^1]: The rough definition of "medium/large scale code" here is "code that is difficult to develop without tests, and as a result, must be designed in an easily testable way." I believe that writing easily testable code is rarely mentioned in introductory books but is essential in practice.
-[^2]: By "advanced language features," I'm thinking of OCaml's functors, GADTs, first-class modules, etc.
+[^1]: The rough definition of "medium/large scale code" here is "code that is difficult to develop without tests, and as a result, must be designed in an easily testable way". Writing easily testable code is a topic rarely mentioned in introductory books but is essential in practice.
+[^2]: By "advanced language features", I'm thinking of OCaml's functors, GADTs, first-class modules, etc.
 
-These were exactly my thoughts when I started to seriously study OCaml a few months ago. I understood the basics of the language by reading books and implementing simple algorithms, but the above two "don't know"s prevented me from feeling like I could _really_ write OCaml. I knew that the only way to get out of this situation was practice, so I started looking for a project to work on.
+These were exactly my thoughts when I started to study OCaml seriously a few months ago. I understood the basics of the language by reading books and implementing simple algorithms, but the above two "don't know"s prevented me from feeling like I could _really_ write OCaml. I knew that the only way to get out of this situation was practice, so I started looking for a project to work on.
 
 I choose a Game Boy emulator as the project for the following reasons:
 
@@ -98,11 +98,11 @@ A schematic diagram of CAMLBOY looks like this:[^4]
 I'll explain the details as needed, but in a nutshell:
 
 - The CPU/timer/GPU operates at a fixed rate according to a clock.
-- The bus sits between the CPU and various hardware modules and routes data reads/writes based on the given address. For example, writes to address `0xFFFF` is routed to the interrupt controller, and enables/disables interrupts based on the written value.
+- The bus sits between the CPU and various hardware modules and routes data reads/writes based on the given address. For example, writes to address `0xFFFF` is routed to the interrupt controller and enables/disables interrupts based on the written value.
 - Hardware modules connected to the bus implement the interface `Addressable_intf.S` (which I will explain later)
 - The bus implements the interface `Word_addressable_intf.S` (which I will explain later)
 - There are various types of cartridges.
-- The timer, GPU, serial port, and joypad can request interrupts. The interrupt controller will notify the requested interrupt to the CPU (further explanation of interrupts will be omitted in this article).
+- The timer, GPU, serial port, and joypad can request interrupts. The interrupt controller will notify the requested interrupt to the CPU (further explanation of interrupts is omitted in this article).
 
 ## Main loop
 
@@ -112,7 +112,7 @@ The main loop is responsible for progressing the clocked hardware modules (highl
   <img src="/images/camlboy-architecture-clocked.png" alt="camlboy architecture clocked" title="camlboy-architecture-clocked">
 </div>
 
-In real hardware, the CPU/timer/GPU share the same hardware clock, so they naturally run in a synchronized state. On the other hand, the emulator is just a sequential execution loop, so we need to devise a way to reproduce the synchronization between these components. To do so, the main loop contains the following steps:
+In real hardware, the CPU/timer/GPU share the same hardware clock, so they naturally run in a synchronized state. On the other hand, the emulator is just a sequential execution loop, so we need to devise a way to reproduce the synchronization between these components. To do so, I implemented the main loop to contain the following steps:
 
 1. Let the CPU execute one instruction and keep track of the number of cycles consumed as a result.
 1. Advance the timer by the number of cycles consumed by the CPU.
@@ -134,7 +134,7 @@ We will look at some basic interfaces used throughout the emulator.
 
 ### Interface for reading/writing 8-bit data
 
-First, let's look at the interface for reading/writing 8-bit data, which is used in the red line below.
+First, let's look at the interface for reading/writing 8-bit data used in the red line below.
 
 <div align="center">
   <img src="/images/camlboy-architecture-addressable.png" alt="camlboy architecture addressable" title="camlboy-architecture-addressable">
@@ -154,7 +154,7 @@ With OCaml, you can
 
 Following these steps, we define the signature `Addressable_intf.S` as below[^7].
 
-[^7]: The `uint8` and `uint16` in the code are not OCaml built-in types but are types from a custom unsinged int module (`units.mli`, `units.ml`).
+[^7]: The `uint8` and `uint16` in the code are not OCaml built-in types but are types from a custom unsigned int module (`units.mli`, `units.ml`).
 
 ```OCaml
 (* addressable_intf.mli *)
@@ -200,7 +200,7 @@ val accepts : t -> uint16 -> bool
 
 ### Interface for reading/writing 16-bit data
 
-Next, let's look at the interface for reading/writing 16-bit data, which is used in the red line below.
+Next, let's look at the interface for reading/writing 16-bit data used in the red line below.
 
 <div align="center">
   <img src="/images/camlboy-architecture-word-addressable.png" alt="camlboy architecture word addressable" title="camlboy-architecture-word-addressable">
@@ -244,7 +244,7 @@ Let's take a look at the implementation of the bus, highlighted in the red box b
   <img src="/images/camlboy-architecture-bus.png" alt="camlboy architecture bus" title="camlboy-architecture-bus">
 </div>
 
-The bus sits between the CPU and various hardware modules, and routes data reads/writes based on the given address. For example, the bus routs read/write to address `0xC000` to the RAM. The full memory map can be found [here](https://gbdev.io/pandocs/Memory_Map.html)
+The bus sits between the CPU and various hardware modules, and routes data reads/writes based on the given address. For example, the bus routs read/write to address `0xC000` to the RAM. You can find the full memory map [here](https://gbdev.io/pandocs/Memory_Map.html)
 
 Using the `Word_addressable_intf.S` implemented above, we can define the interface of the bus module (`bus.mli`) as the following.
 
@@ -336,7 +336,7 @@ Let's take a look at the implementation of the CPU, highlighted in the red box b
 
 ### My initial implementation of the CPU
 
-Below is my initial implementation of the CPU. Details of the `execute` function are omitted here and will be discussed when we implement the instruction set.
+Below is my initial implementation of the CPU. Details of the `execute` function are omitted here and will be discussed when implementing the instruction set.
 
 ```OCaml
 (* cpu.mli *)
@@ -451,7 +451,7 @@ ADD8 A, 0x12
 ADD16 AF, 0x1234
 ```
 
-Now, how should we define such instruction set in OCaml?
+Now, how should we define such an instruction set in OCaml?
 
 ### Define the instruction set using variants
 
@@ -510,7 +510,7 @@ let run_instruction t =
   execute t inst
 ```
 
-To understand the problem, I have extracted the `read_arg` function below. Notice that the return value of the entire function cannot be uniquely determined. This is because the return type of the match expression changes depending on which constructor it matches, as highlighted in the comments.
+I have extracted the `read_arg` function below to understand the problem. Notice that the return value of the entire function cannot be uniquely determined. This is because the return type of the match expression changes depending on which constructor it matches, as highlighted in the comments.
 
 ```OCaml
   (* What is the type of the return value? *)
@@ -689,9 +689,9 @@ Let's look at the implementation of the cartridges, highlighted in the red box b
 
 You might think that Game Boy cartridges are just a ROM (read-only memory) that stores game data/code, but this is not the case. Many Game Boy cartridges contain hardware components to enhance the Game Boy's limited functionality. For example, while ROM_ONLY type cartridges (such as Tetris) only include the ROM that stores the game data/code, MBC3 type cartridges (such as Pokémon Red) contain independent RAM and timers in addition to the ROM.
 
-Since each cartridge type have separate functionality, we will implement each cartridge type as individual modules. Therefore, we need a mechanism to select a module according to the cartridge type at runtime.
+Since each cartridge type has separate functionality, we will implement each cartridge type as individual modules. Therefore, we need a mechanism to select a module according to the cartridge type at runtime.
 
-**_First-class modules_** are helpful for this kind of "runtime module selection". You can write `Detect_cartridge.f` that returns a first-class module based on the cartridge type, as shown below. We will omit the implementation in this article.
+**_First-class modules_** are helpful for this kind of "runtime module selection". As shown below, you can write `Detect_cartridge.f` that returns a first-class module based on the cartridge type. We will omit the implementation in this article.
 
 ```OCaml
 (* detect_cartridge.mli *)
@@ -704,7 +704,7 @@ I used test ROMs and `ppx_expect` to catch regressions and to enable _explorator
 
 ### What are test ROMs
 
-Test ROMs are programs that test certain functionality of the emulator. For example, there are test ROMs that
+Test ROMs are programs that test certain functionality of the emulator. For example, there are test ROMs that:
 
 - Test if the basic arithmetic instructions are working as expected.
 - Test if the MBC1 cartridge type is adequately supported.
@@ -727,7 +727,7 @@ Test ROMs typically output the test results to the display[^77]. For example, [m
 
 Below is an example integration test implemented using a test ROM and [`ppx_expect`](https://github.com/janestreet/ppx_expect). Here is what is happening:
 
-1. `M.run_test_rom_and_print_framebuffer` runs the given ROM and prints the final state of the screen in ascii characters.
+1. `M.run_test_rom_and_print_framebuffer` runs the given ROM and prints the final state of the screen in ASCII characters.
 1. The printed string is matched with the `...` in `[%expect{|...|}]`.
 
 Details about `ppx_expect` can be found in [this article](https://blog.janestreet.com/testing-with-expectations).
@@ -765,7 +765,7 @@ I used a library called [Brr](https://github.com/dbuenzli/brr) when implementing
 
 ## Optimization
 
-Although I was able to get it working in my browser, it had one problem — it was unplayably slow. Below how it looked like in the PC browser at this point, running at around 20 FPS. The actual Game Boy runs at 60 FPS so we need to improve the performance by a factor of three.
+Although I was able to get it working in my browser, it had one problem — it was unplayably slow. Below is how it looked like in the PC browser at this point, running at around 20 FPS. The actual Game Boy runs at 60 FPS, so we need to improve the performance by a factor of three.
 
 <div>
   <img src="/images/before-optimize.gif" alt="before optimize" title="before-optimize">
@@ -789,7 +789,7 @@ Similarly, I found that `timer.ml` and some `Bigstringaf` functions were consumi
 
 ### Removing the bottlenecks
 
-Now that I knew where the bottlenecks were, I worked on removing them. Since this article does not cover the parts that these changes touch, I will only list where I optimized and their results.
+Now that I knew where the bottlenecks were, I worked on removing them. Since this article does not cover the parts that these changes touch, I will only list what I optimized and their results.
 
 - Optimize `oam_table.ml` ([commit](https://github.com/linoscope/CAMLBOY/commit/47989b77451873202268c955bc3b650420e648e8)):
   - 14fps -> 24fps
@@ -822,7 +822,7 @@ As a side note, optimizing the JS performance also improved the native performan
 
 I implemented a _headless benchmarking mode_ to run the emulator without UI. I measured the FPS in various OCaml compiler backends, and the result was as follows:[^9]
 
-[^9]: Note that this benchmark is for comparing OCaml backends and can not be used to compare the FPS with other Game Boy emulators. This is because the performance of an emulator depends significantly on how accurate it is and how much functionality it has. For example, CALMBOY does not implement the APU (Audio Processing Unit), so there is no point comparing its FPS with emulators that have APU support.
+[^9]: Note that we can not use this benchmark to compare the FPS with other Game Boy emulators. This is because the performance of an emulator depends significantly on how accurate it is and how much functionality it has. For example, CALMBOY does not implement the APU (Audio Processing Unit), so there is no point comparing its FPS with emulators that have APU support.
 
 <div>
   <img src="/images/benchmark-result.png" alt="benchmark result" title="benchmark-result"> 
@@ -834,9 +834,9 @@ I implemented a _headless benchmarking mode_ to run the emulator without UI. I m
 
 I found emulator development to be similar to competitive programming. They both proceed through an iteration of the following steps:
 
-- Read the specification. The problem statement in competitive programming and the manuals/wiki pages in emulator development.
+- Read the specification — the problem statement in competitive programming and the manuals/wiki pages in emulator development.
 - Implement according to the specification.
-- Check whether the implementation satisfies the specification. Submitting to an online judge in competitive programming and running test ROMs in emulator development.
+- Check whether the implementation satisfies the specification — submitting to an online judge in competitive programming and running test ROMs in emulator development.
 
 In the past, I have recommended competitive programming to people (like me) who want to code but have a hard time thinking of what to implement. In the future, I would also recommend emulator development to such people.
 
@@ -844,11 +844,11 @@ In the past, I have recommended competitive programming to people (like me) who 
 
 #### The ecosystem
 
-The ecosystem of OCaml has improved a lot since the last time I touched OCaml (around six years ago). To list a few examples
+The ecosystem of OCaml has improved a lot since the last time I touched OCaml (around six years ago). To list a few examples:
 
 - Thanks to [dune](https://dune.readthedocs.io/en/stable/), we now have the "just throw the files in the directory, and the build system will do the rest" experience, which is becoming the norm in modern programming languages.
 - Thanks to software such as [Merlin](https://github.com/ocaml/merlin) and [OCamlformat](https://github.com/ocaml-ppx/ocamlformat), introducing autocomplete, code navigation, and autoformat is mostly effortless.
-- Thanks to [setup-ocaml](https://github.com/ocaml/setup-ocaml), we can set up Github actions builds and tests your code by just commiting a single file.
+- Thanks to [setup-ocaml](https://github.com/ocaml/setup-ocaml), we can set up Github actions builds and test your code by just committing a single file.
 
 If you tried OCaml a few years ago but left because of the ecosystem, you should give it another shot.
 
@@ -858,13 +858,13 @@ A functional language is often defined as "a language that supports a programmin
 
 In fact, the implementation of CAMLBOY has mutable states everywhere for performance reasons. Many modules have functions with the type `t -> ... -> unit`, which indicates modification of some mutable state. And despite this non-"functional" implementation, I never felt that I was missing out on the benefits of OCaml.
 
-Mabye it's not that I like "functional" languages; I like statically typed languages with variants, pattern matching, a module system, and nice type inference.
+Maybe it's not that I like "functional" languages; I like statically typed languages with variants, pattern matching, a module system, and nice type inference.
 
 ## Things I didn't like about OCaml
 
 #### The ecosystem
 
-Although the ecosystem has improved a lot, some things still feel complex and/or poorly documented. For example, I had trouble resolving dependencies in a reproducible way as there seemed to be no clear instructions in the [official opam document](https://opam.ocaml.org/doc/Usage.html). I ended up reading the source of [`setup-ocaml`](https://github.com/ocaml/setup-ocaml) to find out the required commands, and the commands I found felt a little complex (we need to "publish" the package locally, then install the locally published package). It would be super nice if there was a single command that resolves the dependencies and builds the code in a reproducible way.
+Although the ecosystem has significantly improved, some things still feel complex or poorly documented. For example, I had trouble resolving dependencies in a reproducible way as there seemed to be no clear instructions in the [official opam document](https://opam.ocaml.org/doc/Usage.html). I ended up reading the source of [`setup-ocaml`](https://github.com/ocaml/setup-ocaml) to find out the required commands, and the commands I found felt a little complex (we need to "publish" the package locally, then install the locally published package). It would be super nice if there was a single command that resolves the dependencies and builds the code in a reproducible way.
 
 #### The syntactical cost of depending on abstractions
 
