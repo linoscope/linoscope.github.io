@@ -1,7 +1,7 @@
 ---
 title: "Writing a Game Boy Emulator in OCaml"
 date: 2022-01-11
-draft: true
+draft: false
 description: "For the past few months, I have been working on a project called CAMLBOY, a Game Boy emulator that runs in the browser."
 images: ["/images/camlboy-header.png"]
 featuredImage: "/images/camlboy-header.png"
