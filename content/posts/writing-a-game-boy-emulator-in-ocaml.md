@@ -563,8 +563,8 @@ type _ arg =
 
 (* Instructions *)
 type t =
-  | ADD8  of arg * arg (*  8-bit version of ADD *)
-  | ADD16 of arg * arg (* 16-bit version of ADD *)
+  | ADD8  of uint8 arg * uint8 arg
+  | ADD16 of uint16 arg * uint16 arg
   | ...
 ```
 
