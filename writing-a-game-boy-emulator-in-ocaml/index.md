@@ -848,7 +848,7 @@ The ecosystem of OCaml has improved a lot since the last time I touched OCaml (a
 
 - Thanks to [dune](https://dune.readthedocs.io/en/stable/), we now have the "just throw the files in the directory, and the build system will do the rest" experience, which is becoming the norm in modern programming languages.
 - Thanks to software such as [Merlin](https://github.com/ocaml/merlin) and [OCamlformat](https://github.com/ocaml-ppx/ocamlformat), introducing autocomplete, code navigation, and autoformat is mostly effortless.
-- Thanks to [setup-ocaml](https://github.com/ocaml/setup-ocaml), we can set up Github actions builds and test your code by just committing a single file.
+- Thanks to [setup-ocaml](https://github.com/ocaml/setup-ocaml), we can set up Github actions that builds and test your code by just committing a single file.
 
 If you tried OCaml a few years ago but left because of the ecosystem, you should give it another shot.
 
