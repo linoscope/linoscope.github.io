@@ -817,7 +817,9 @@ Now that I knew where the bottlenecks were, I worked on removing them. Since thi
 
 ### Disabling inlining
 
-At this point, the emulator was running at 60 FPS on my PC browser, but only at 20~40 FPS on my phone. As I wondered what to do, I realized that the JS output from the release build was slower than the JS output from the dev build. With the [help](https://discuss.ocaml.org/t/js-of-ocaml-output-performs-considerably-worse-when-built-with-profile-release-flag/8862) from people at discuss.ocaml.org, we found that js_of_ocaml's inlining was slowing down the JS performance, probably because the emulator contains some long functions, and the JS engine doesn't JIT compile when a function is too long. (Update 2022-01-12: The negative impact of inlining is being addressed in [ocsigen/js_of_ocaml#1220](https://github.com/ocsigen/js_of_ocaml/pull/1220).)
+At this point, the emulator was running at 60 FPS on my PC browser, but only at 20~40 FPS on my phone. As I wondered what to do, I realized that the JS output from the release build was slower than the JS output from the dev build. With the [help](https://discuss.ocaml.org/t/js-of-ocaml-output-performs-considerably-worse-when-built-with-profile-release-flag/8862) from people at discuss.ocaml.org, we found that js_of_ocaml's inlining was slowing down the JS performance[^18]. (Update 2022-01-12: The negative impact of inlining is being addressed in [ocsigen/js_of_ocaml#1220](https://github.com/ocsigen/js_of_ocaml/pull/1220).)
+
+[^18]: This is probably because the emulator contains some long functions and the JS engine doesn't JIT compile when a function is too long.
 
 After disabling inlining, I achieved 100 FPS on my PC and 60 FPS on my phone. Below is the gif of the emulator running in 100 FPS in the PC browser.
 
