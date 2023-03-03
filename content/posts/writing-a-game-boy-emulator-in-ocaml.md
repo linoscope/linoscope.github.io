@@ -574,7 +574,7 @@ To understand the meaning of this definition, let's focus on the third line of t
   | R : Registers.r -> uint8  arg
 ```
 
-The argument type of the constructor (`Registers.r` in `Registers.r -> uint8 arg`) has the same functionality as the `of Registers.r` in the variant definition. It changes the **type of the value you _get_ in the pattern match based on the constructor**. In the below match statement, notice that the type of value we get in the match statement (type of `r` and `rr`) is different depending on the constructor, we match. This is possible because the argument type of the constructor is different.
+The argument type of the constructor (`Registers.r` in `Registers.r -> uint8 arg`) has the same functionality as the `of Registers.r` in the variant definition. It changes the **type of the value you _get_ in the pattern match based on the constructor**. In the below match statement, notice that the type of value we get in the match statement (type of `r` and `rr`) is different depending on the constructor we match. This is possible because the argument type of the constructor is different.
 
 ```OCaml
 let read_arg = function
