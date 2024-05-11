@@ -25,6 +25,8 @@ lightgallery: false
 license: ""
 ---
 
+## About
+
 Hi, I am Lin Oshitani, a blockchain protocol researcher living and OCaml programmer living in Tokyo.
 
 ## Career
@@ -35,11 +37,7 @@ Hi, I am Lin Oshitani, a blockchain protocol researcher living and OCaml program
 
 ## Links
 
-- :(fab fa-github fa-fw): [GitHub](https://github.com/linoscope/)
-- :(fab fa-gitlab fa-fw): [GitLab](https://gitlab.com/linoscope)
-- :(fab fa-twitter fa-fw): [Twitter](https://twitter.com/linoscope/)
-- :(fab fa-linkedin fa-fw): [Linkedin](https://linkedin.com/in/lin-oshitani-a256a813a/)
-- :(far fa-envelope fa-fw): [Email](mailto:linoshitani@gmail.com)
+:(fab fa-github fa-fw): [GitHub](https://github.com/linoscope/) :(fab fa-gitlab fa-fw): [GitLab](https://gitlab.com/linoscope) :(fab fa-twitter fa-fw): [Twitter](https://twitter.com/linoscope/) :(fab fa-linkedin fa-fw): [Linkedin](https://linkedin.com/in/lin-oshitani-a256a813a/) :(far fa-envelope fa-fw): [Email](mailto:linoshitani@gmail.com)
 
 ## Writings
 
