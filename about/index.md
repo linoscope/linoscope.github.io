@@ -3,7 +3,7 @@
 
 ## About
 
-Hi, I am Lin Oshitani, a blockchain protocol researcher living and OCaml programmer living in Tokyo.
+Hi, I am Lin Oshitani, a blockchain protocol researcher and OCaml programmer living in Tokyo.
 
 ## Career
 - Protocol Researcher, Nethermind, 2024 -
