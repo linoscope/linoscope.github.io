@@ -1,0 +1,20 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>All Posts - The Linoscope Machine</title>
+        <link>https://linoscope.github.io/posts/</link>
+        <description>All Posts | The Linoscope Machine</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>linoshitani@gmail.com (linoscope)</managingEditor>
+            <webMaster>linoshitani@gmail.com (linoscope)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 11 Jan 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://linoscope.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Writing a Game Boy Emulator in OCaml</title>
+    <link>https://linoscope.github.io/writing-a-game-boy-emulator-in-ocaml/</link>
+    <pubDate>Tue, 11 Jan 2022 00:00:00 &#43;0000</pubDate>
+    <author>linoscope</author>
+    <guid>https://linoscope.github.io/writing-a-game-boy-emulator-in-ocaml/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/camlboy-header.png" referrerpolicy="no-referrer">
+            </div>Introduction For the past few months, I have been working on a project called CAMLBOY, a Game Boy emulator written in OCaml that runs in the browser. You can try it out on the following demo page:
+Demo Page
+I included several homebrew ROMs in the demo, so please try them out (I recommend Bouncing ball and Rocket Man Demo). You can also play with it in your mobile browser as it runs at 60 FPS on recent smartphones.]]></description>
+</item>
+</channel>
+</rss>
