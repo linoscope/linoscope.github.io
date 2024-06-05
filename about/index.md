@@ -20,6 +20,7 @@ Hi, I am Lin Oshitani, a blockchain protocol researcher and OCaml programmer liv
 **Blockchains**
 
 - [How Tezos Self Amendment Works](https://www.marigold.dev/post/how-tezos-self-amendment-works)
+- [Strawmanning Based Preconfirmations](https://ethresear.ch/t/strawmanning-based-preconfirmations/19695)
 
 **Programming**
 
