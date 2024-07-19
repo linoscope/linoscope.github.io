@@ -43,8 +43,14 @@ Hi, I am Lin Oshitani, a blockchain protocol researcher and OCaml programmer liv
 
 **Blockchains**
 
-- [How Tezos Self Amendment Works](https://www.marigold.dev/post/how-tezos-self-amendment-works)
+On based sequencing and based preconfirmations:
 - [Strawmanning Based Preconfirmations](https://ethresear.ch/t/strawmanning-based-preconfirmations/19695)
+- [Based Preconfirmations with Multi-round MEV-Boost](https://ethresear.ch/t/based-preconfirmations-with-multi-round-mev-boost/20091)
+
+On Tezos:
+- [How Tezos Self Amendment Works](https://www.marigold.dev/post/how-tezos-self-amendment-works)
+- [Sponsored Operations](https://forum.tezosagora.org/t/feedback-request-sponsored-operations/6126)
+- [Ticket updates in receipts](https://www.marigold.dev/post/ticket-updates-in-receipts)
 
 **Programming**
 
