@@ -23,6 +23,9 @@ On based sequencing and based preconfirmations:
 - [Strawmanning Based Preconfirmations](https://ethresear.ch/t/strawmanning-based-preconfirmations/19695)
 - [Based Preconfirmations with Multi-round MEV-Boost](https://ethresear.ch/t/based-preconfirmations-with-multi-round-mev-boost/20091)
 
+On data availability sampling:
+- [Understanding Data Availability Sampling](https://mirror.xyz/linoscope.eth/m-GtfDd_sux7B2j_3l4ddffJRfhoAFbfhLPoxBCFuzk)
+
 On Tezos:
 - [How Tezos Self Amendment Works](https://www.marigold.dev/post/how-tezos-self-amendment-works)
 - [Sponsored Operations](https://forum.tezosagora.org/t/feedback-request-sponsored-operations/6126)
