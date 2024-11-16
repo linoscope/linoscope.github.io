@@ -1,6 +1,12 @@
 # About
 
 
+
+
+<div >
+  <img src="/images/profile.jpg" alt="profile picture" title="profile-picture" height="300">
+</div>
+
 ## About
 
 Hi, I am Lin Oshitani, a blockchain protocol researcher and OCaml programmer living in Tokyo.
