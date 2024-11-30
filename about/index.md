@@ -1,10 +1,21 @@
 # About
 
 
+<style>
+.photos {
+  display: flex;
+  justify-content: center;
+}
 
+.photos > img {
+  margin-right: 40px;
+}
 
-<div >
-  <img src="/images/profile.jpg" alt="profile picture" title="profile-picture" height="300">
+</style>
+
+<div class="photos">
+  <img src="/images/linoscope-icon-square.jpg" alt="profile picture" title="profile-picture" height="200">
+  <img src="/images/profile.jpg" alt="profile picture" title="profile-picture" height="200">
 </div>
 
 ## About
