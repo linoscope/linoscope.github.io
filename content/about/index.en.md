@@ -57,21 +57,17 @@ Hi, I am Lin Oshitani, a blockchain protocol researcher and OCaml programmer liv
 :(fab fa-github fa-fw): [GitHub](https://github.com/linoscope/) :(fab fa-gitlab fa-fw): [GitLab](https://gitlab.com/linoscope) :(fab fa-twitter fa-fw): [Twitter](https://twitter.com/linoscope/) :(fab fa-linkedin fa-fw): [Linkedin](https://linkedin.com/in/lin-oshitani-a256a813a/) :(far fa-envelope fa-fw): [Email](mailto:linoshitani@gmail.com)
 
 ## Writings
+- [Writing a Game Boy Emulator in OCaml](https://linoscope.github.io/writing-a-game-boy-emulator-in-ocaml/), Jan 11, 2022
+- [How Tezos Self Amendment Works](https://web.archive.org/web/20240719063359/https://www.marigold.dev/post/how-tezos-self-amendment-works), May 10, 2023.
+- [Strawmanning Based Preconfirmations](https://ethresear.ch/t/strawmanning-based-preconfirmations/19695), May 31, 2024.
+- [Based Preconfirmations with Multi-round MEV-Boost](https://ethresear.ch/t/based-preconfirmations-with-multi-round-mev-boost/20091), Jul 18, 2024.
+- [Understanding Data Availability Sampling](https://mirror.xyz/linoscope.eth/m-GtfDd_sux7B2j_3l4ddffJRfhoAFbfhLPoxBCFuzk), Jul 30, 2024
+- [Same-Slot L1→L2 Message Passing](https://ethresear.ch/t/same-slot-l1-l2-message-passing/21186), December 5, 2024.
 
-**Blockchains**
+<!-- On Tezos: -->
 
-On based sequencing and based preconfirmations:
-- [Strawmanning Based Preconfirmations](https://ethresear.ch/t/strawmanning-based-preconfirmations/19695)
-- [Based Preconfirmations with Multi-round MEV-Boost](https://ethresear.ch/t/based-preconfirmations-with-multi-round-mev-boost/20091)
 
-On data availability sampling:
-- [Understanding Data Availability Sampling](https://mirror.xyz/linoscope.eth/m-GtfDd_sux7B2j_3l4ddffJRfhoAFbfhLPoxBCFuzk)
+## Recorded Talks
 
-On Tezos:
-- [How Tezos Self Amendment Works](https://www.marigold.dev/post/how-tezos-self-amendment-works)
-- [Sponsored Operations](https://forum.tezosagora.org/t/feedback-request-sponsored-operations/6126)
-- [Ticket updates in receipts](https://www.marigold.dev/post/ticket-updates-in-receipts)
-
-**Programming**
-
-- [Writing a Game Boy Emulator in OCaml](https://linoscope.github.io/writing-a-game-boy-emulator-in-ocaml/)
+- [Exploring Based Preconfirmations Without Gateways (preconf.erence)](https://youtu.be/F5buuRuCCt4?si=XvTbqxFQT5mgON4l)
+- [Based Preconfirmations with MR-MEV-Boost (Devcon 7 SEA)](https://www.youtube.com/watch?v=fo2xDLSst_M)
