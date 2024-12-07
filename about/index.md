@@ -47,6 +47,6 @@ Hi, I am Lin Oshitani, a blockchain protocol researcher and OCaml programmer liv
 
 ## Recorded Talks
 
-- [Exploring Based Preconfirmations Without Gateways (preconf.erence)](https://youtu.be/F5buuRuCCt4?si=XvTbqxFQT5mgON4l)
-- [Based Preconfirmations with MR-MEV-Boost (Devcon 7 SEA)](https://www.youtube.com/watch?v=fo2xDLSst_M)
+- [Exploring Based Preconfirmations Without Gateways (preconf.erence)](https://youtu.be/F5buuRuCCt4?si=XvTbqxFQT5mgON4l), Nov 11, 2024
+- [Based Preconfirmations with MR-MEV-Boost (Devcon 7 SEA)](https://www.youtube.com/watch?v=fo2xDLSst_M), Nov 15, 2024
 
