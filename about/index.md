@@ -5,6 +5,8 @@
 .photos {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .photos > img {
