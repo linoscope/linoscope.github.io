@@ -50,3 +50,7 @@ Hi, I am Lin Oshitani (押谷 倫), a blockchain protocol researcher and OCaml p
 - [Exploring Based Preconfirmations Without Gateways (preconf.erence)](https://youtu.be/F5buuRuCCt4?si=XvTbqxFQT5mgON4l), Nov 11, 2024
 - [Based Preconfirmations with MR-MEV-Boost (Devcon 7 SEA)](https://www.youtube.com/watch?v=fo2xDLSst_M), Nov 15, 2024
 
+## Other
+
+- [Tané FM #37「不条理を解決する技術」としてのブロックチェーン｜ゲスト Lin Oshitani](https://open.spotify.com/episode/4Xc8MqxbeLkgcqKVRel9nz)
+
