@@ -59,6 +59,8 @@ Hi, I am Lin Oshitani (押谷 倫), a blockchain protocol researcher and OCaml p
 :(fab fa-github fa-fw): [GitHub](https://github.com/linoscope/) :(fab fa-gitlab fa-fw): [GitLab](https://gitlab.com/linoscope) :(fab fa-twitter fa-fw): [Twitter](https://twitter.com/linoscope/) :(fab fa-linkedin fa-fw): [Linkedin](https://linkedin.com/in/lin-oshitani-a256a813a/) :(far fa-envelope fa-fw): [Email](mailto:linoshitani@gmail.com)
 
 ## Posts
+- [Embedded Rollups, Part 2: Shared Bridging](https://ethresear.ch/t/embedded-rollups-part-2-shared-bridging/21461) (Co-authored with Conor), Jan 17, 2025
+- [Embedded Rollups, Part 1: Introduction](https://ethresear.ch/t/embedded-rollups-part-1-introduction/21460) (Co-authored with Conor), Jan 17, 2025
 - [Same-Slot L1→L2 Message Passing](https://ethresear.ch/t/same-slot-l1-l2-message-passing/21186) (Co-authored with Conor et al.), December 6, 2024.
 - [Fast (and Slow) L2→L1 Withdrawals](https://ethresear.ch/t/fast-and-slow-l2-l1-withdrawals/21161) (Co-authored with Conor et al.), December 5, 2024.
 - [Understanding Data Availability Sampling](https://mirror.xyz/linoscope.eth/m-GtfDd_sux7B2j_3l4ddffJRfhoAFbfhLPoxBCFuzk), Jul 30, 2024.
