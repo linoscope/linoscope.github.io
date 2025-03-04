@@ -58,3 +58,7 @@ Hi, I am Lin Oshitani (押谷 倫), a blockchain protocol researcher and OCaml p
 
 - [「不条理を解決する技術」としてのブロックチェーン｜ゲスト Lin Oshitani](https://open.spotify.com/episode/4Xc8MqxbeLkgcqKVRel9nz) (Tané FM ), Oct 10, 2024.
 
+## Blog
+
+- [Satoshi Nakamoto Fan Club](https://bitcoinspace.hatenablog.com/) (2014年から書いてる日本語のブログ)
+
