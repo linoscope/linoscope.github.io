@@ -53,15 +53,16 @@ Hi, I am Lin Oshitani (押谷 倫), a blockchain protocol researcher and OCaml p
 ## Recorded Talks
 
 - [EIP-7917: Deterministic proposer lookahead](https://youtu.be/oFSUU91BMOg?si=RYsOgBXszrD76e-Q) (PEEPanEIP, with Justin Drake), April 15, 2025.
+- [Japanese] [Based Rollup、そして Ethereum の未来について](https://youtu.be/BxM-XHwJTzY?si=_w9oU8NT2JHolWql) (Tané Summit #2), April 10, 2025.
 - [Writing a Game Boy Emulator in OCaml](https://www.youtube.com/watch?v=hFzHqxMar3g) (Functional Conf 2025), Jan 25, 2025.
 - [Based Preconfirmations with MR-MEV-Boost](https://www.youtube.com/watch?v=fo2xDLSst_M) (Devcon 7 SEA), Nov 15, 2024.
 - [Exploring Based Preconfirmations Without Gateways](https://youtu.be/F5buuRuCCt4?si=XvTbqxFQT5mgON4l) (preconf.erence), Nov 11, 2024.
 
 ## Podcasts
 
-- [「不条理を解決する技術」としてのブロックチェーン｜ゲスト Lin Oshitani](https://open.spotify.com/episode/4Xc8MqxbeLkgcqKVRel9nz) (Tané FM ), Oct 10, 2024.
+- [Japanese] [「不条理を解決する技術」としてのブロックチェーン｜ゲスト Lin Oshitani](https://open.spotify.com/episode/4Xc8MqxbeLkgcqKVRel9nz) (Tané FM ), Oct 10, 2024.
 
 ## Blog
 
-- [Satoshi Nakamoto Fan Club](https://bitcoinspace.hatenablog.com/) (2014年から書いてる日本語のブログ)
+- [Japanese] [Satoshi Nakamoto Fan Club](https://bitcoinspace.hatenablog.com/) (2014年から書いてる日本語のブログ)
 
