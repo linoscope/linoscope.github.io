@@ -76,9 +76,10 @@ Hi, I am Lin Oshitani (押谷 倫), a blockchain protocol researcher and OCaml p
 
 ## Recorded Talks
 
-- [Exploring Based Preconfirmations Without Gateways](https://youtu.be/F5buuRuCCt4?si=XvTbqxFQT5mgON4l) (preconf.erence), Nov 11, 2024.
+- [EIP-7917: Deterministic proposer lookahead](https://youtu.be/oFSUU91BMOg?si=RYsOgBXszrD76e-Q) (PEEPanEIP, with Justin Drake), April 15, 2025.
+- [Writing a Game Boy Emulator in OCaml](https://www.youtube.com/watch?v=hFzHqxMar3g) (Functional Conf 2025), Jan 25, 2025.
 - [Based Preconfirmations with MR-MEV-Boost](https://www.youtube.com/watch?v=fo2xDLSst_M) (Devcon 7 SEA), Nov 15, 2024.
-- [Writing a Game Boy Emulator in OCaml](https://www.youtube.com/watch?v=hFzHqxMar3g), (Functional Conf 2025), Jan 25, 2025.
+- [Exploring Based Preconfirmations Without Gateways](https://youtu.be/F5buuRuCCt4?si=XvTbqxFQT5mgON4l) (preconf.erence), Nov 11, 2024.
 
 ## Podcasts
 
