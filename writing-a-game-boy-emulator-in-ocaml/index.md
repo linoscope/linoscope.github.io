@@ -9,6 +9,8 @@ For the past few months, I have been working on a project called _CAMLBOY_, a Ga
 
 I included several homebrew ROMs in the demo, so please try them out (I recommend _Bouncing ball_ and _Rocket Man Demo_). You can also play with it in your mobile browser as it runs at 60 FPS on recent smartphones.
 
+Edit: As of [this PR](https://github.com/linoscope/CAMLBOY/pull/15/files), CAMLBOY now runs on WASM via `js_of_ocaml`'s WASM support'!
+
 ## Repository
 
 You can find the repository here:
