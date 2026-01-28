@@ -59,6 +59,7 @@ Hi, I am Lin Oshitani (押谷 倫), a blockchain protocol researcher and OCaml p
 :(fab fa-github fa-fw): [GitHub](https://github.com/linoscope/) :(fab fa-gitlab fa-fw): [GitLab](https://gitlab.com/linoscope) :(fab fa-twitter fa-fw): [Twitter](https://twitter.com/linoscope/) :(fab fa-linkedin fa-fw): [Linkedin](https://linkedin.com/in/lin-oshitani-a256a813a/) :(far fa-envelope fa-fw): [Email](mailto:linoshitani@gmail.com)
 
 ## Publications
+- [Measuring Per-Opcode Proving Time](https://ethresear.ch/t/measuring-per-opcode-proving-time/23955), Jan 27, 2026
 - [Pipelining only ePBS](https://hackmd.io/@linoscope/pipelining-only-epbs), Sep 26, 2025
 - [Blob Sharing for Based Rollups](https://ethresear.ch/t/blob-sharing-for-based-rollups/22659) (with Anshu Jalan), Jun 23, 2025
 - [EIP-7917: Deterministic proposer lookahead](https://eips.ethereum.org/EIPS/eip-7917) (with Justin Drake), Mar 28, 2025
