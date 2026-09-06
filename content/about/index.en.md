@@ -59,10 +59,11 @@ Hi, I am Lin Oshitani (押谷 倫), a blockchain protocol researcher and OCaml p
 :(fab fa-github fa-fw): [GitHub](https://github.com/linoscope/) :(fab fa-gitlab fa-fw): [GitLab](https://gitlab.com/linoscope) :(fab fa-twitter fa-fw): [Twitter](https://twitter.com/linoscope/) :(fab fa-linkedin fa-fw): [Linkedin](https://linkedin.com/in/lin-oshitani-a256a813a/) :(far fa-envelope fa-fw): [Email](mailto:linoshitani@gmail.com)
 
 ## Publications
-- [Environmental Bisimulation for Type-Based Secure Information Flow in λ-Calculus with Declassification](https://fcs-workshop.github.io/fcs2026/papers/fcs-paper7.pdf) (with Eijiro Sumii et al.), Jul 25, 2026
+- [Environmental Bisimulation for Type-Based Secure Information Flow in λ-Calculus with Declassification](https://fcs-workshop.github.io/fcs2026/papers/fcs-paper7.pdf) (FCS 2026, with Eijiro Sumii et al.), Jul 25, 2026
 - [The L2 Fee Vault: Pricing L1 Costs with Feedback Control](https://ethresear.ch/t/the-l2-fee-vault-pricing-l1-costs-with-feedback-control/24656) (with Ulysse Pavloff), April 15, 2026
 - [Measuring Per-Opcode Proving Time](https://ethresear.ch/t/measuring-per-opcode-proving-time/23955), Jan 27, 2026
 - [Pipelining only ePBS](https://hackmd.io/@linoscope/pipelining-only-epbs), Sep 26, 2025
+- [SoK: Preconfirmations](https://arxiv.org/abs/2510.02947) (IEEE ICBC 2026, with Aikaterini-Panagiota Stouka et al.), Oct 3, 2025
 - [Blob Sharing for Based Rollups](https://ethresear.ch/t/blob-sharing-for-based-rollups/22659) (with Anshu Jalan), Jun 23, 2025
 - [EIP-7917: Deterministic proposer lookahead](https://eips.ethereum.org/EIPS/eip-7917) (with Justin Drake), Mar 28, 2025
 - [Preconfirmation Fair Exchange](https://ethresear.ch/t/preconfirmation-fair-exchange/21891) (with Conor McMenamin), Mar 7, 2025
