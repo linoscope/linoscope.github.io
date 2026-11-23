@@ -1,0 +1,114 @@
+# Translations for Japanese (LoveIt ships none)
+
+[backToTop]
+other = "トップに戻る"
+[viewComments]
+other = "コメントを見る"
+[posts]
+other = "記事"
+[allSome]
+other = "すべての{{ .Some }}"
+[tag]
+other = "タグ"
+[tags]
+other = "タグ"
+[category]
+other = "カテゴリー"
+[categories]
+other = "カテゴリー"
+[more]
+other = "もっと見る"
+[selectLanguage]
+other = "言語を選択"
+[switchTheme]
+other = "テーマを切り替え"
+[poweredBySome]
+other = "Powered by {{ .Hugo }} | Theme - {{ .Theme }}"
+[valineLang]
+other = "ja"
+[valinePlaceholder]
+other = "コメントを入力..."
+[facebookLanguageCode]
+other = "ja_JP"
+[giscusLang]
+other = "ja"
+[search]
+other = "検索"
+[searchPlaceholder]
+other = "タイトルや本文を検索..."
+[clear]
+other = "クリア"
+[cancel]
+other = "キャンセル"
+[noResultsFound]
+other = "見つかりませんでした"
+[lunrLanguageCode]
+other = "ja"
+[copyToClipboard]
+other = "クリップボードにコピー"
+[cookieconsentMessage]
+other = "このサイトは利便性向上のために Cookie を使用しています。"
+[cookieconsentDismiss]
+other = "OK"
+[cookieconsentLink]
+other = "詳細"
+[shareOn]
+other = "共有"
+[contents]
+other = "目次"
+[publishedOnDate]
+other = "{{ .Date }} 公開"
+[includedInCategories]
+other = "カテゴリー: {{ .Categories }}"
+[wordCount]
+other = "{{ .Count }} 文字"
+[readingTime]
+other = "約 {{ .Count }} 分"
+[views]
+other = "閲覧"
+[author]
+other = "著者"
+[updatedOnDate]
+other = "{{ .Date }} 更新"
+[readMarkdown]
+other = "Markdown を表示"
+[back]
+other = "戻る"
+[home]
+other = "ホーム"
+[readMore]
+other = "続きを読む"
+[pageNotFound]
+other = "ページが見つかりません"
+[pageNotFoundText]
+other = "お探しのページは存在しません。"
+[note]
+other = "メモ"
+[abstract]
+other = "概要"
+[info]
+other = "情報"
+[tip]
+other = "ヒント"
+[success]
+other = "成功"
+[question]
+other = "質問"
+[warning]
+other = "警告"
+[failure]
+other = "失敗"
+[danger]
+other = "危険"
+[bug]
+other = "バグ"
+[example]
+other = "例"
+[quote]
+other = "引用"
+[new]
+other = "新規"
+[changed]
+other = "変更"
+[deleted]
+other = "削除"
